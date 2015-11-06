@@ -3,20 +3,23 @@ package laborations;
 import java.util.Arrays;
 
 public class Laboration1 {
-	int[] seq;
-	public Laboration1(int[] seq){
-		this.seq = seq;
+
+	public Laboration1(){
+		
 	}
-	
 	public static void main(String[] args) {
-		int[] s = {1,24,7,2,8,6,2,1,7,80,6,3,2,6}; 
-		Laboration1 lab = new Laboration1(s); 
-		lab.bInsertionSort();
+		Laboration1 lab = new Laboration1();
+		int[] s = lab.generateRandomList(10);
+		//lab.mMergeSort1(s, 0, s.length);
+		System.out.println(Arrays.toString(lab.InsertionSort(s)));
 	}
 	
 	
-	public void mMergeSort1(){
-		//Hej hej tomte
+	public void mMergeSort1(int[] array, int start, int end){
+		int mid = (start+end)/2;
+		mMergeSort1(array, mid+1, end);
+		mMergeSort1(array, start, mid);
+		
 	}
 	
 	public void mMergeSort2(){
@@ -40,22 +43,25 @@ public class Laboration1 {
 	    return mid;
 	}
 	
-	void bInsertionSort (){
+	int[] bInsertionSort(int[] list){
 	    int ins, i, j;
 	    int tmp;
 
-	    for (i = 1; i < this.seq.length; i++) {
-	        ins = BinarySearch (this.seq, 0, i, this.seq[i]);
-	        tmp = this.seq[i];
+	    for (i = 1; i < list.length; i++) {
+	        ins = BinarySearch (list, 0, i, list[i]);
+	        tmp = list[i];
 	        for (j = i - 1; j >= ins; j--)
-	            this.seq[j + 1] = this.seq[j];
-	        this.seq[ins] = tmp;
+	            list[j + 1] = list[j];
+	        list[ins] = tmp;
 	    }
-	    System.out.println(Arrays.toString(this.seq));
+	   // System.out.println(Arrays.toString(this.seq));
+	    return list;
 	}
 	
-	public void InsertionSort(){		
-		int[] s = this.seq; 
+	
+	
+	public int[] InsertionSort(int[] list){		
+		int[] s = list; 
 		System.out.println("Sorting: " + Arrays.toString(s));
 		for(int i = 1; i < s.length; i++){
 			int key = s[i];
@@ -68,10 +74,21 @@ public class Laboration1 {
 					s[j+1] = key; 
 					break;
 				}
+				System.out.println(Arrays.toString(s));
 			}		
-			System.out.println("Sorting: " + Arrays.toString(s));
+
+
 		}
-		
-				
+		return list;			
+	}
+	
+	public int[] generateRandomList(int k){
+		int[] list = new int[k];
+	    for (int i=0; i<k; i++){
+	        int n = (int)(Math.random()*100);
+	        list[i] = n;
+	    }
+        //System.out.println(Arrays.toString(list));
+	    return list; 
 	}
 }
