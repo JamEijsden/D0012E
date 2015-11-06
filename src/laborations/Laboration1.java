@@ -69,15 +69,14 @@ public class Laboration1 {
 				if(key < s[j]){
 					//System.out.println(key + " < " + s[j]);
 					s[j+1] = s[j];
+					s[j] = key;
 				}else {
 					//System.out.println(key + " >= " + s[j]);
 					s[j+1] = key; 
+					//System.out.println(Arrays.toString(s)+"\n");
 					break;
 				}
-				System.out.println(Arrays.toString(s));
 			}		
-
-
 		}
 		return list;			
 	}
