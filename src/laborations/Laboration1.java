@@ -15,7 +15,11 @@ public class Laboration1 {
 	}
 	
 	
-	public void mMergeSort(){
+	public void mMergeSort1(){
+		//Hej hej tomte
+	}
+	
+	public void mMergeSort2(){
 		//Hej hej tomte
 	}
 
