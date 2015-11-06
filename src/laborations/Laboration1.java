@@ -9,7 +9,7 @@ public class Laboration1 {
 	}
 	public static void main(String[] args) {
 		Laboration1 lab = new Laboration1();
-		int[] s = lab.generateRandomList(10);
+		int[] s = lab.generateRandomList(20);
 		//lab.mMergeSort1(s, 0, s.length);
 		System.out.println(Arrays.toString(lab.InsertionSort(s)));
 	}
@@ -44,6 +44,7 @@ public class Laboration1 {
 	}
 	
 	int[] bInsertionSort(int[] list){
+		System.out.println("Sorting: " +Arrays.toString(list));
 	    int ins, i, j;
 	    int tmp;
 
@@ -57,8 +58,6 @@ public class Laboration1 {
 	   // System.out.println(Arrays.toString(this.seq));
 	    return list;
 	}
-	
-	
 	
 	public int[] InsertionSort(int[] list){		
 		int[] s = list; 
@@ -84,7 +83,7 @@ public class Laboration1 {
 	public int[] generateRandomList(int k){
 		int[] list = new int[k];
 	    for (int i=0; i<k; i++){
-	        int n = (int)(Math.random()*100);
+	        int n = (int)(Math.random()*1000);
 	        list[i] = n;
 	    }
         //System.out.println(Arrays.toString(list));
