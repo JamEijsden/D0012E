@@ -11,7 +11,7 @@ public class Laboration1 {
 
 	public static void main(String[] args) {
 		Laboration1 lab = new Laboration1();
-		lab.array = lab.generateRandomList(10);
+		lab.array = lab.generateRandomList(7);
 		// lab.mMergeSort1(s, 0, s.length);
 		lab.doMergeSort(3);
 	}
@@ -22,16 +22,20 @@ public class Laboration1 {
 
 	private void mMergeSort1(int[] array, int k, int start, int end){
 		int mid = (start+end)/2;
+		System.out.println(end-start+ " >? " + k);
 		if((end-start) > k){
-			mMergeSort1(array, k, mid+1, end);
+			mMergeSort1(array, k, mid, end);
 			mMergeSort1(array,k, start, mid);
 		}else {
-			array = bInsertionSort(array, mid, end);
-			System.out.println(Arrays.toString(array));
-			array = bInsertionSort(array, start, mid);
+			array = bInsertionSort(array, start, end);
 			System.out.println(Arrays.toString(array));
 		}
+		merge(array, start, mid+1);
 		
+		
+	}
+	
+	private void merge(int[] array, int high, int low){
 		
 	}
 
@@ -56,7 +60,7 @@ public class Laboration1 {
 	}
 
 	private int[] bInsertionSort(int[] list, int start, int end) {
-		System.out.println("Sorting: " + Arrays.toString(list) + ", Interval " + (start+1) +" - " + (end));
+		System.out.println("Sorting: " + Arrays.toString(list) + ", Interval " + (start) +" - " + (end-1));
 		int ins, i, j;
 		int tmp;
 
