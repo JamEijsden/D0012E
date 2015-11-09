@@ -3,90 +3,102 @@ package laborations;
 import java.util.Arrays;
 
 public class Laboration1 {
+	private int[] array;
 
-	public Laboration1(){
-		
+	public Laboration1() {
+
 	}
+
 	public static void main(String[] args) {
 		Laboration1 lab = new Laboration1();
-		int[] s = lab.generateRandomList(20);
-		//lab.mMergeSort1(s, 0, s.length);
-		System.out.println(Arrays.toString(lab.InsertionSort(s)));
+		lab.array = lab.generateRandomList(10);
+		// lab.mMergeSort1(s, 0, s.length);
+		lab.doMergeSort(3);
 	}
-	
-	
-	public void mMergeSort1(int[] array, int start, int end){
+
+	public void doMergeSort(int k) {
+		mMergeSort1(this.array, k, 0, this.array.length);
+	}
+
+	private void mMergeSort1(int[] array, int k, int start, int end){
 		int mid = (start+end)/2;
-		mMergeSort1(array, mid+1, end);
-		mMergeSort1(array, start, mid);
+		if((end-start) > k){
+			mMergeSort1(array, k, mid+1, end);
+			mMergeSort1(array,k, start, mid);
+		}else {
+			array = bInsertionSort(array, mid, end);
+			System.out.println(Arrays.toString(array));
+			array = bInsertionSort(array, start, mid);
+			System.out.println(Arrays.toString(array));
+		}
+		
 		
 	}
-	
-	public void mMergeSort2(){
-		//Hej hej tomte
+
+	private void mMergeSort2() {
+		// Hej hej tomte
 	}
 
-	int BinarySearch (int a[], int low, int high, int key)
-	{
-	    int mid;
+	private int BinarySearch(int a[], int low, int high, int key) {
+		int mid;
 
-	    if (low == high)
-	        return low;
+		if (low == high)
+			return low;
 
-	    mid = low + ((high - low) / 2);
+		mid = low + ((high - low) / 2);
 
-	    if (key > a[mid])
-	        return BinarySearch (a, mid + 1, high, key);
-	    else if (key < a[mid])
-	        return BinarySearch (a, low, mid, key);
+		if (key > a[mid])
+			return BinarySearch(a, mid + 1, high, key);
+		else if (key < a[mid])
+			return BinarySearch(a, low, mid, key);
 
-	    return mid;
+		return mid;
 	}
-	
-	int[] bInsertionSort(int[] list){
-		System.out.println("Sorting: " +Arrays.toString(list));
-	    int ins, i, j;
-	    int tmp;
 
-	    for (i = 1; i < list.length; i++) {
-	        ins = BinarySearch (list, 0, i, list[i]);
-	        tmp = list[i];
-	        for (j = i - 1; j >= ins; j--)
-	            list[j + 1] = list[j];
-	        list[ins] = tmp;
-	    }
-	   // System.out.println(Arrays.toString(this.seq));
-	    return list;
+	private int[] bInsertionSort(int[] list, int start, int end) {
+		System.out.println("Sorting: " + Arrays.toString(list) + ", Interval " + (start+1) +" - " + (end));
+		int ins, i, j;
+		int tmp;
+
+		for (i = start+1; i < end; i++) {
+			ins = BinarySearch(list, start, i, list[i]);
+			tmp = list[i];
+			for (j = i - 1; j >= ins; j--)
+				list[j + 1] = list[j];
+			list[ins] = tmp;
+		}
+		// System.out.println(Arrays.toString(this.seq));
+		return list;
 	}
-	
-	public int[] InsertionSort(int[] list){		
-		int[] s = list; 
+
+	public int[] InsertionSort(int[] list) {
+		int[] s = list;
 		System.out.println("Sorting: " + Arrays.toString(s));
-		for(int i = 1; i < s.length; i++){
+		for (int i = 1; i < s.length; i++) {
 			int key = s[i];
-			for(int j = i-1; j >= 0; j--){
-				if(key < s[j]){
-					//System.out.println(key + " < " + s[j]);
-					s[j+1] = s[j];
+			for (int j = i - 1; j >= 0; j--) {
+				if (key < s[j]) {
+					// System.out.println(key + " < " + s[j]);
+					s[j + 1] = s[j];
 					s[j] = key;
-				}else {
-					//System.out.println(key + " >= " + s[j]);
-					s[j+1] = key; 
-					//System.out.println(Arrays.toString(s)+"\n");
+				} else {
+					// System.out.println(key + " >= " + s[j]);
+					s[j + 1] = key;
+					// System.out.println(Arrays.toString(s)+"\n");
 					break;
 				}
-			}		
+			}
 		}
-		return list;			
+		return list;
 	}
-	
-	public int[] generateRandomList(int k){
+
+	public int[] generateRandomList(int k) {
 		int[] list = new int[k];
-	    for (int i=0; i<k; i++){
-	        int n = (int)(Math.random()*1000);
-	        list[i] = n;
-	    }
-        //System.out.println(Arrays.toString(list));
-	    return list; 
+		for (int i = 0; i < k; i++) {
+			int n = (int) (Math.random() * 1000);
+			list[i] = n;
+		}
+		// System.out.println(Arrays.toString(list));
+		return list;
 	}
 }
