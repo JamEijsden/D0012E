@@ -11,32 +11,59 @@ public class Laboration1 {
 
 	public static void main(String[] args) {
 		Laboration1 lab = new Laboration1();
-		lab.array = lab.generateRandomList(7);
+		lab.array = lab.generateRandomList(10);
+		System.out.println("START: "+Arrays.toString(lab.array));
 		// lab.mMergeSort1(s, 0, s.length);
-		lab.doMergeSort(3);
+		lab.doMergeSort(5);
 	}
 
 	public void doMergeSort(int k) {
-		mMergeSort1(this.array, k, 0, this.array.length);
+		mMergeSort1(k, 0, this.array.length-1);
 	}
 
-	private void mMergeSort1(int[] array, int k, int start, int end){
-		int mid = (start+end)/2;
-		System.out.println(end-start+ " >? " + k);
-		if((end-start) > k){
-			mMergeSort1(array, k, mid, end);
-			mMergeSort1(array,k, start, mid);
-		}else {
+	private void mMergeSort1(int k, int start, int end) {
+		int mid = (start + end) / 2;
+		//System.out.println(end - start + " >? " + k);
+		if ((end - start) > k) {
+			//System.out.println("Split!");
+			mMergeSort1(k, mid+1, end);
+			mMergeSort1(k, start, mid);
+		} else {
 			array = bInsertionSort(array, start, end);
-			System.out.println(Arrays.toString(array));
+			//System.out.println(Arrays.toString(array));
 		}
-		merge(array, start, mid+1);
-		
-		
+		merge(start, mid, end);
+
 	}
-	
-	private void merge(int[] array, int high, int low){
+
+	private void merge(int lowerIndex, int middle, int higherIndex) {
+		int[] tempMergArr = new int[array.length];
+		for (int i = lowerIndex; i <= higherIndex; i++) {
+			tempMergArr[i] = array[i];
+		}
+		int i = lowerIndex;
+		int j = middle + 1;
+		int k = lowerIndex;
+		while (i <= middle && j <= higherIndex) {
+			if (tempMergArr[i] <= tempMergArr[j]) {
+				array[k] = tempMergArr[i];
+				i++;
+			} else {
+				array[k] = tempMergArr[j];
+				j++;
+			}
+			k++;
+			System.out.println("SOOORTING: "+Arrays.toString(array));
+		}
+		while (i <= middle) {
+			System.out.println("ENDING: "+Arrays.toString(array));
+			array[k] = tempMergArr[i];
+			k++;
+			i++;
 		
+		}
+		
+		System.out.println("Merged: " + lowerIndex + " " + middle + " "+ higherIndex +" "+ "\nResult: "+Arrays.toString(array));
 	}
 
 	private void mMergeSort2() {
@@ -60,11 +87,11 @@ public class Laboration1 {
 	}
 
 	private int[] bInsertionSort(int[] list, int start, int end) {
-		System.out.println("Sorting: " + Arrays.toString(list) + ", Interval " + (start) +" - " + (end-1));
+		//System.out.println("Sorting: " + Arrays.toString(list) + ", Interval " + (start) + " - " + (end - 1));
 		int ins, i, j;
 		int tmp;
 
-		for (i = start+1; i < end; i++) {
+		for (i = start + 1; i < end; i++) {
 			ins = BinarySearch(list, start, i, list[i]);
 			tmp = list[i];
 			for (j = i - 1; j >= ins; j--)
