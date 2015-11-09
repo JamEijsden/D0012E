@@ -73,8 +73,18 @@ public class Laboration1 {
 		//System.out.println("Merged: " + lowerIndex + " <-> " + higherIndex +" "+ "\nResult: "+Arrays.toString(array));
 	}
 
-	private void mMergeSort2() {
-		// Hej hej tomte
+	private void mMergeSort2(int k, int start, int end){
+		int mid = (start+end)/2;
+		System.out.println(end-start+ " >? " + k);
+		if((end-start) >= k){
+			mMergeSort2(k, mid+1, end);
+			mMergeSort2(k, start, mid);
+		}else {
+			array = InsertionSort(k, start, end);
+			System.out.println(Arrays.toString(array));
+			
+		}
+		//merge(start, mid, end);	
 	}
 
 	private int BinarySearch(int a[], int low, int high, int key) {
@@ -109,25 +119,24 @@ public class Laboration1 {
 		return list;
 	}
 
-	public int[] InsertionSort(int[] list) {
-		int[] s = list;
-		System.out.println("Sorting: " + Arrays.toString(s));
-		for (int i = 1; i < s.length; i++) {
-			int key = s[i];
+	public int[] InsertionSort(int k, int start, int end) {
+		System.out.println("Sorting: " + Arrays.toString(array) + ", Interval " + (start) +" - " + (end));
+		for (int i = start; i <= end; i++) {
+			int key = array[i];
 			for (int j = i - 1; j >= 0; j--) {
-				if (key < s[j]) {
+				if (key < array[j]) {
 					// System.out.println(key + " < " + s[j]);
-					s[j + 1] = s[j];
-					s[j] = key;
+					array[j + 1] = array[j];
+					array[j] = key;
 				} else {
 					// System.out.println(key + " >= " + s[j]);
-					s[j + 1] = key;
+					array[j + 1] = key;
 					// System.out.println(Arrays.toString(s)+"\n");
 					break;
 				}
 			}
 		}
-		return list;
+		return array;
 	}
 
 	public int[] generateRandomList(int k) {
