@@ -13,10 +13,10 @@ public class Laboration1 {
 
 	public static void main(String[] args) {
 		Laboration1 lab = new Laboration1();
-		lab.array = lab.generateRandomList(1000000);
-		//System.out.println("Start: "+Arrays.toString(lab.array));
+		lab.array = lab.generateRandomList(10);
+		System.out.println("Start: "+Arrays.toString(lab.array));
 		// lab.mMergeSort1(s, 0, s.length);
-		lab.doMergeSort(100);
+		lab.doMergeSort(4);
 		
 		
 	}
@@ -33,7 +33,7 @@ public class Laboration1 {
 	private void mMergeSort1(int k, int start, int end) {
 		int mid = (start + end) / 2;
 		//System.out.println(end - start + " >? " + k);
-		if ((end - start) > k) {
+		if ((end - start) >= k) {
 			//System.out.println("Split!");
 			mMergeSort1(k, mid+1, end);
 			mMergeSort1(k, start, mid);
@@ -70,7 +70,7 @@ public class Laboration1 {
 			i++;
 		}
 		
-		//System.out.println("Merged: " + lowerIndex + " <-> " + higherIndex +" "+ "\nResult: "+Arrays.toString(array));
+		System.out.println("Merged: " + lowerIndex + " <-> " + higherIndex +" "+ "\nResult: "+Arrays.toString(array));
 	}
 
 	private void mMergeSort2() {
