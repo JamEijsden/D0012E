@@ -84,7 +84,7 @@ public class Laboration1 {
 			System.out.println(Arrays.toString(array));
 			
 		}
-		//merge(start, mid, end);	
+		merge(start, mid, end);	
 	}
 
 	private int BinarySearch(int a[], int low, int high, int key) {
