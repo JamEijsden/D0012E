@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 public class Laboration1 {
 	private int[] array;
+	long startTime, endTime, totalTime, startTime2, endTime2, totalTime2;
 
 	public Laboration1() {
 
@@ -13,40 +14,72 @@ public class Laboration1 {
 
 	public static void main(String[] args) {
 		Laboration1 lab = new Laboration1();
-		lab.array = lab.generateRandomList(10);
-		System.out.println("Start: "+Arrays.toString(lab.array));
+		int[] newArr = lab.generateRandomList(10000000);
+		
+		// System.out.println("Start: "+Arrays.toString(lab.array));
 		// lab.mMergeSort1(s, 0, s.length);
-		lab.doMergeSort(4);
-		
-		
+		lab.doMergeSort(1000000, newArr);
+		//System.out.println(Arrays.toString(lab.InsertionSort(0, newArr.length-1)));
+
 	}
 
-	public void doMergeSort(int k) {
+	private int[] range(int low, int high) {
+		int[] arr = new int[high - low];
+
+		int i = 0;
+		while (low <= high) {
+			low = low + i;
+			arr[i] = low;
+			i++;
+
+		}
+		return arr;
+	}
+
+	public void doMergeSort(int k, int[] arr) {
+		int[] sorted = range(0, 100000);
+		int[] cpArr = arr.clone();
+		this.array = arr;
+		//System.out.println(Arrays.toString(array));
 		NumberFormat formatter = new DecimalFormat("#0.00000");
-		long startTime = System.currentTimeMillis();
-		mMergeSort1(k, 0, this.array.length-1);
-		long endTime   = System.currentTimeMillis();
-		long totalTime = endTime - startTime;
-		System.out.print("Execution time is " + formatter.format((totalTime) / 1000d) + " seconds");
+		startTime = System.currentTimeMillis();
+		mMergeSort1(k, 0, this.array.length - 1);
+		
+		//bInsertionSort(array, 0, array.length-1);
+		
+		endTime = System.currentTimeMillis();
+		totalTime = endTime - startTime;
+		System.out.println("Execution time, binary, is " + formatter.format((totalTime) / 1000d) + " seconds");
+		
+		this.array = cpArr;
+		//System.out.println(Arrays.toString(cpArr));
+		startTime2 = System.currentTimeMillis();
+		mMergeSort2(k, 0, this.array.length - 1);
+		
+		//InsertionSort(0, arr.length-1);
+		
+		endTime2 = System.currentTimeMillis();
+		totalTime2 = endTime2 - startTime2;
+		System.out.println("Execution time, linear, is " + formatter.format((totalTime2) / 1000d) + " seconds");
 	}
 
 	private void mMergeSort1(int k, int start, int end) {
 		int mid = (start + end) / 2;
-		//System.out.println(end - start + " >? " + k);
+		// System.out.println(end - start + " >? " + k);
 		if ((end - start) >= k) {
-			//System.out.println("Split!");
-			mMergeSort1(k, mid+1, end);
+			// System.out.println("Split!");
+			mMergeSort1(k, mid + 1, end);
 			mMergeSort1(k, start, mid);
 		} else {
 			array = bInsertionSort(array, start, end);
-			//System.out.println(Arrays.toString(array));
+			// System.out.println(Arrays.toString(array));
 		}
 		merge(start, mid, end);
 
 	}
 
 	private void merge(int lowerIndex, int middle, int higherIndex) {
-		//System.out.println("Init merge: "+Arrays.toString(array));
+		// System.out.println("Init merge: "+Arrays.toString(array));
 		int[] tempMergArr = new int[array.length];
 		for (int i = lowerIndex; i <= higherIndex; i++) {
 			tempMergArr[i] = array[i];
@@ -69,22 +102,23 @@ public class Laboration1 {
 			k++;
 			i++;
 		}
-		
-		System.out.println("Merged: " + lowerIndex + " <-> " + higherIndex +" "+ "\nResult: "+Arrays.toString(array));
+
+		// System.out.println("Merged: " + lowerIndex + " <-> " + higherIndex +"
+		// "+ "\nResult: "+Arrays.toString(array));
 	}
 
-	private void mMergeSort2(int k, int start, int end){
-		int mid = (start+end)/2;
-		System.out.println(end-start+ " >? " + k);
-		if((end-start) >= k){
-			mMergeSort2(k, mid+1, end);
+	private void mMergeSort2(int k, int start, int end) {
+		int mid = (start + end) / 2;
+		// System.out.println(end-start+ " >? " + k);
+		if ((end - start) >= k) {
+			mMergeSort2(k, mid + 1, end);
 			mMergeSort2(k, start, mid);
-		}else {
-			array = InsertionSort(k, start, end);
-			System.out.println(Arrays.toString(array));
-			
+		} else {
+			array = InsertionSort(start, end);
+			// System.out.println(Arrays.toString(array));
+
 		}
-		merge(start, mid, end);	
+		merge(start, mid, end);
 	}
 
 	private int BinarySearch(int a[], int low, int high, int key) {
@@ -104,7 +138,8 @@ public class Laboration1 {
 	}
 
 	private int[] bInsertionSort(int[] list, int start, int end) {
-		//System.out.println("Sorting: " + Arrays.toString(list) + ", Interval " + (start) + " - " + (end - 1));
+		// System.out.println("Sorting: " + Arrays.toString(list) + ", Interval
+		// " + (start) + " - " + (end - 1));
 		int ins, i, j;
 		int tmp;
 
@@ -119,22 +154,25 @@ public class Laboration1 {
 		return list;
 	}
 
-	public int[] InsertionSort(int k, int start, int end) {
-		System.out.println("Sorting: " + Arrays.toString(array) + ", Interval " + (start) +" - " + (end));
+	public int[] InsertionSort(int start, int end) {
+		// System.out.println("Sorting: " + Arrays.toString(array) + ", Interval
+		// " + (start) +" - " + (end));
 		for (int i = start; i <= end; i++) {
-			int key = array[i];
-			for (int j = i - 1; j >= 0; j--) {
-				if (key < array[j]) {
-					// System.out.println(key + " < " + s[j]);
-					array[j + 1] = array[j];
-					array[j] = key;
-				} else {
-					// System.out.println(key + " >= " + s[j]);
-					array[j + 1] = key;
-					// System.out.println(Arrays.toString(s)+"\n");
-					break;
-				}
+
+			int valueToSort = array[i];
+			int j = i;
+			while (j > 0 && array[j - 1] > valueToSort) {
+				array[j] = array[j - 1];
+				j--;
 			}
+			array[j] = valueToSort;
+			/*
+			 * int key = array[i]; for (int j = i - 1; j >= 0; j--) { if (key <
+			 * array[j]) { // System.out.println(key + " < " + s[j]); array[j +
+			 * 1] = array[j]; array[j] = key; } else { // System.out.println(key
+			 * + " >= " + s[j]); array[j + 1] = key; //
+			 * System.out.println(Arrays.toString(s)+"\n"); break; } }
+			 */
 		}
 		return array;
 	}
