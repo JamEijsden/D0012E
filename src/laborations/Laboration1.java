@@ -14,11 +14,13 @@ public class Laboration1 {
 
 	public static void main(String[] args) {
 		Laboration1 lab = new Laboration1();
-		int[] newArr = lab.generateRandomList(10000000);
+		int[] newArr = lab.generateRandomList(4000000);
+		//int[] almostSortArr = lab.almostSorted(2000000); //alternating numbers.. 1,3,2,5,4,7..
 		
 		// System.out.println("Start: "+Arrays.toString(lab.array));
 		// lab.mMergeSort1(s, 0, s.length);
-		lab.doMergeSort(1000000, newArr);
+		//lab.doMergeSort(200, newArr);
+		lab.doMergeSort(1000, newArr);
 		//System.out.println(Arrays.toString(lab.InsertionSort(0, newArr.length-1)));
 
 	}
@@ -37,9 +39,10 @@ public class Laboration1 {
 	}
 
 	public void doMergeSort(int k, int[] arr) {
-		int[] sorted = range(0, 100000);
+		//int[] sorted = range(0, 2000000);  
 		int[] cpArr = arr.clone();
 		this.array = arr;
+		//this.array = sorted;
 		//System.out.println(Arrays.toString(array));
 		NumberFormat formatter = new DecimalFormat("#0.00000");
 		startTime = System.currentTimeMillis();
@@ -52,6 +55,7 @@ public class Laboration1 {
 		System.out.println("Execution time, binary, is " + formatter.format((totalTime) / 1000d) + " seconds");
 		
 		this.array = cpArr;
+		//this.array = sorted;
 		//System.out.println(Arrays.toString(cpArr));
 		startTime2 = System.currentTimeMillis();
 		mMergeSort2(k, 0, this.array.length - 1);
@@ -185,5 +189,24 @@ public class Laboration1 {
 		}
 		// System.out.println(Arrays.toString(list));
 		return list;
+	}
+	public int[] almostSorted(int high){
+		int[] testarr = new int[high];
+		int i = 0;
+		while (i < high) {
+			if (i < 1) {
+				testarr[i] = 0;
+			} else {
+				if (i%2 == 0) {
+					testarr[i] = i;
+				} else {
+					testarr[i] = i+2;
+				}	
+			}
+			i++;
+
+		}
+		//System.out.println(Arrays.toString(testarr));
+		return testarr;
 	}
 }
