@@ -73,7 +73,7 @@ public class Laboration1 {
 				}
 			}
 		}
-		System.out.println(Arrays.toString(lSorted) + "\n" + Arrays.toString(bSorted));
+		System.out.println("Linear: "+ Arrays.toString(lSorted) + "\nBinary: " + Arrays.toString(bSorted));
 	}
 
 	private void mMergeSort1(int k, int start, int end) {
@@ -100,21 +100,29 @@ public class Laboration1 {
 		int i = lowerIndex;
 		int j = middle + 1;
 		int k = lowerIndex;
-		while (i <= middle && j <= higherIndex) {
-			if (tempMergArr[i] <= tempMergArr[j]) {
-				array[k] = tempMergArr[i];
-				i++;
-			} else {
+		while(k <= higherIndex) {
+			if (i > middle) {
 				array[k] = tempMergArr[j];
 				j++;
+			} else if(j > higherIndex) {
+				array[k] = tempMergArr[i];
+				i++;
+			} else if(tempMergArr[j] < tempMergArr[i]){
+				array[k] = tempMergArr[j];
+				j++;
+			} else{
+				array[k] = tempMergArr[i];
+				i++;
 			}
+			//System.out.println(Arrays.toString(array));
 			k++;
 		}
-		while (i <= middle) {
+		/*while (i <= middle) {
+			System.out.println(Arrays.toString(array));
 			array[k] = tempMergArr[i];
 			k++;
 			i++;
-		}
+		}*/
 
 		// System.out.println("Merged: " + lowerIndex + " <-> " + higherIndex +"
 		// "+ "\nResult: "+Arrays.toString(array));
@@ -169,16 +177,17 @@ public class Laboration1 {
 
 	public int[] InsertionSort(int start, int end) {
 		// System.out.println("Sorting: " + Arrays.toString(array) + ", Interval
-		// " + (start) +" - " + (end));
-		for (int i = start; i <= end; i++) {
+		System.out.println((start) +" - " + (end));
+		if(start != 0) start--;
+		for (int i = start+1; i <= end; i++) {
 
 			int valueToSort = array[i];
-			int j = i;
-			while (j > 0 && array[j - 1] > valueToSort) {
-				array[j] = array[j - 1];
+			int j = i-1;
+			while (j >= 0 && array[j] > valueToSort) {
+				array[j+1] = array[j];
 				j--;
 			}
-			array[j] = valueToSort;
+			array[j+1] = valueToSort;
 			/*
 			 * int key = array[i]; for (int j = i - 1; j >= 0; j--) { if (key <
 			 * array[j]) { // System.out.println(key + " < " + s[j]); array[j +
@@ -187,6 +196,7 @@ public class Laboration1 {
 			 * System.out.println(Arrays.toString(s)+"\n"); break; } }
 			 */
 		}
+		System.out.println("================= " +Arrays.toString(array));
 		return array;
 	}
 
@@ -221,14 +231,16 @@ public class Laboration1 {
 	}
 
 	public void test() {
-		int n = 10;
+		int n = 20;
 		int k = 10;
 		int[] arr;
 	
-		while (n <= 100) {
+		while (n <= 20) {
 			arr = this.generateRandomList(n);
 			System.out.println("Test running with k=" + k + " and n=" + n);
-			this.doMergeSort(k, arr);
+			//this.doMergeSort(k, arr);
+			array = arr.clone();
+			this.InsertionSort(10, 19);
 			n = n*2;
 			System.out.println("\n");
 		}
