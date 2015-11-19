@@ -73,6 +73,7 @@ public class Laboration1 {
 				}
 			}
 		}
+		System.out.println(Arrays.toString(lSorted) + "\n" + Arrays.toString(bSorted));
 	}
 
 	private void mMergeSort1(int k, int start, int end) {
@@ -221,14 +222,14 @@ public class Laboration1 {
 
 	public void test() {
 		int n = 10;
-		int k = 100;
+		int k = 10;
 		int[] arr;
 	
 		while (n <= 100) {
-			arr = this.almostSorted(n);
+			arr = this.generateRandomList(n);
 			System.out.println("Test running with k=" + k + " and n=" + n);
 			this.doMergeSort(k, arr);
-			n = n*5;
+			n = n*2;
 			System.out.println("\n");
 		}
 	}
