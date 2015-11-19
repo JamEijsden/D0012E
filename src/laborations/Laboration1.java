@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 public class Laboration1 {
 	private int[] array;
 	long startTime, endTime, totalTime, startTime2, endTime2, totalTime2;
@@ -36,29 +38,41 @@ public class Laboration1 {
 		// int[] sorted = range(0, 2000000);
 		
 		this.array = arr.clone();
+		
 		// this.array = sorted;
 		// System.out.println(Arrays.toString(array));
 		NumberFormat formatter = new DecimalFormat("#0.00000");
 		startTime = System.currentTimeMillis();
+		System.out.println("Binary Start list length: " + Arrays.toString(arr));
 		mMergeSort1(k, 0, this.array.length - 1);
-
+		int[] bSorted = array;
 		// bInsertionSort(array, 0, array.length-1);
 
 		endTime = System.currentTimeMillis();
 		totalTime = endTime - startTime;
-		System.out.println("Execution time, binary, is " + formatter.format((totalTime) / 1000d) + " seconds");
+		System.out.println("Execution time, binary, is " + formatter.format((totalTime) / 1000d) + " seconds\n");
 
 		this.array = arr.clone();
 		// this.array = sorted;
 		// System.out.println(Arrays.toString(cpArr));
 		startTime2 = System.currentTimeMillis();
+		System.out.println("Linear Start list length: " + Arrays.toString(arr));
 		mMergeSort2(k, 0, this.array.length - 1);
-
-		// InsertionSort(0, arr.length-1);
-
 		endTime2 = System.currentTimeMillis();
 		totalTime2 = endTime2 - startTime2;
-		System.out.println("Execution time, linear, is " + formatter.format((totalTime2) / 1000d) + " seconds");
+		System.out.println("Execution time, linear, is " + formatter.format((totalTime2) / 1000d) + " seconds\n");
+		int[] lSorted = array;
+		// InsertionSort(0, arr.length-1);
+		for(int i = 0; i < lSorted.length; i++){
+			if(lSorted[i] != bSorted[i]) {
+				System.out.println("Linear Sorted == Binary Sorted = false\n");
+				break;
+			}else {
+				if(i == lSorted.length-1){
+					System.out.println("Linear Sorted == Binary Sorted = true\n");
+				}
+			}
+		}
 	}
 
 	private void mMergeSort1(int k, int start, int end) {
@@ -206,15 +220,15 @@ public class Laboration1 {
 	}
 
 	public void test() {
-		int n = 10000;
-		int k = 10000;
+		int n = 10;
+		int k = 100;
 		int[] arr;
 	
-		while (n <= 1000000000) {
+		while (n <= 100) {
 			arr = this.almostSorted(n);
-			System.out.println("Test ran with k=" + k + " and n=" + n);
+			System.out.println("Test running with k=" + k + " and n=" + n);
 			this.doMergeSort(k, arr);
-			n = n*10;
+			n = n*5;
 			System.out.println("\n");
 		}
 	}
