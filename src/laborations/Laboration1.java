@@ -178,12 +178,12 @@ public class Laboration1 {
 	public int[] InsertionSort(int start, int end) {
 		// System.out.println("Sorting: " + Arrays.toString(array) + ", Interval
 		System.out.println((start) +" - " + (end));
-		if(start != 0) start--;
+		//if(start != 0) start = start-1;
 		for (int i = start+1; i <= end; i++) {
 
 			int valueToSort = array[i];
 			int j = i-1;
-			while (j >= 0 && array[j] > valueToSort) {
+			while (j >= start && array[j] > valueToSort) {
 				array[j+1] = array[j];
 				j--;
 			}
@@ -231,16 +231,17 @@ public class Laboration1 {
 	}
 
 	public void test() {
-		int n = 20;
+		int n = 10;
 		int k = 10;
 		int[] arr;
 	
-		while (n <= 20) {
+		while (n <= 40) {
 			arr = this.generateRandomList(n);
+			//System.out.println(Arrays.toString(arr));
 			System.out.println("Test running with k=" + k + " and n=" + n);
-			//this.doMergeSort(k, arr);
-			array = arr.clone();
-			this.InsertionSort(10, 19);
+			this.doMergeSort(k, arr);
+			//array = arr.clone();
+			//this.InsertionSort(5, 9);
 			n = n*2;
 			System.out.println("\n");
 		}
