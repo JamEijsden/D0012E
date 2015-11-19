@@ -23,7 +23,7 @@ public class Laboration1 {
 		int[] arr = new int[high - low];
 
 		int i = 0;
-		while (low <= high) {
+		while (low < high) {
 			low = low + 1;
 			arr[i] = low;
 			i++;
@@ -206,14 +206,15 @@ public class Laboration1 {
 	}
 
 	public void test() {
-		int n = 1000000;
-		int k = 10;
+		int n = 10000;
+		int k = 10000;
 		int[] arr;
-		arr = this.almostSorted(1000000);
-		while (k <= n) {
+	
+		while (n <= 1000000000) {
+			arr = this.almostSorted(n);
 			System.out.println("Test ran with k=" + k + " and n=" + n);
 			this.doMergeSort(k, arr);
-			k = k*10;
+			n = n*10;
 			System.out.println("\n");
 		}
 	}
