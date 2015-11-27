@@ -60,13 +60,18 @@ public class Laboration2 {
 				if (Math.abs(j - hx) <= c) {
 					return j;
 				} else {
-					int _j = hx;
-					int y = hashArray[_j];
-					while (!((hx <= _j) && (_j >= (hx + c)) && (Math.abs(j - hashFunction(y)) <= c))) {
-						_j++;
+					int _j;
+					int y = 0;
+					for(_j = hx; _j <= (hx + c); _j++){
+						y = hashArray[_j];
+						if(Math.abs(j - hashFunction(y)) <= c) {
+							hashArray[j] = y;
+							return _j;
+						}
 					}
-					hashArray[j] = y;
-					return _j;
+					System.out.println("FAAAIALED NOT DOONOE"); 
+					
+					
 					
 				}
 			}
