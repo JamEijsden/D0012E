@@ -50,7 +50,7 @@ public class Laboration2 {
 		}
 	}
 
-	public int linearProbingMod2(int hx, int[] hashArray, int c) {
+	public int linearProbingMod2(int hx, int c) {
 		int probe = hx % hashArray.length;
 		// int probesDone = 0;
 		int j;
@@ -62,17 +62,20 @@ public class Laboration2 {
 				} else {
 					int _j = hx;
 					int y = hashArray[_j];
-					while((hx <= _j) && (_j >= (hx+c)) && (Math.abs(j-hashFunction) <= c)){
-
+					while (!((hx <= _j) && (_j >= (hx + c)) && (Math.abs(j - hashFunction(y)) <= c))) {
+						_j++;
+					}
+					hashArray[j] = y;
+					return _j;
+					
 				}
 			}
+
+			if (probe == hashArray.length)
+				probe = 0;
+			// probesDone++;
+
 		}
-
-		if (probe == hashArray.length)
-			probe = 0;
-		// probesDone++;
-
-	}
 
 	}
 
