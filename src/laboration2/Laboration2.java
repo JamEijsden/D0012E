@@ -40,9 +40,9 @@ public class Laboration2 {
 				probe++;
 			else
 				probe--;
-			if (probe == hashArray.length)
-				probe = 0;
-
+			if (probe == hashArray.length) probe = 0;
+			if (probe == -1) probe = hashArray.length-1;
+			
 			probesDone++;
 
 		}
@@ -90,7 +90,7 @@ public class Laboration2 {
 		}
 	}
 	public int hashFunction(int key) {
-		return (key*(key+3) % (hashArray.length));
+		return key*(key + 3)/3;
 		
 	}
 
