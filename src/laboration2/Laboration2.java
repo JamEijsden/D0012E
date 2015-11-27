@@ -40,9 +40,11 @@ public class Laboration2 {
 				probe++;
 			else
 				probe--;
-			if (probe == hashArray.length) probe = 0;
-			if (probe == -1) probe = hashArray.length-1;
-			
+			if (probe == hashArray.length)
+				probe = 0;
+			if (probe == -1)
+				probe = hashArray.length - 1;
+
 			probesDone++;
 
 		}
@@ -59,9 +61,10 @@ public class Laboration2 {
 					return j;
 				} else {
 					int _j = hx;
-					// while((hx <= _j) && (_j >= (hx+c)) && (Math.abs(j-hy) <=// c)){
+					int y = hashArray[_j];
+					while((hx <= _j) && (_j >= (hx+c)) && (Math.abs(j-hashFunction) <= c)){
 
-				//}
+				}
 			}
 		}
 
@@ -83,15 +86,16 @@ public class Laboration2 {
 	public void insert() { // the n will be hashed before inserting, later.
 		int[] listElement = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19 };
 		for (int i = 0; i < 10; i++) {
-			int hashedValue = hashFunction(listElement[i]);			
+			int hashedValue = hashFunction(listElement[i]);
 			int index = this.linearProbingMod1(hashedValue, hashArray);
 			hashArray[index] = hashedValue;
 			System.out.println(Arrays.toString(hashArray));
 		}
 	}
+
 	public int hashFunction(int key) {
-		return key*(key + 3)/3;
-		
+		return key * (key + 3) % hashArray.length;
+
 	}
 
 	public int[] createStorage(int k) {
