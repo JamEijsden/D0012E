@@ -13,17 +13,64 @@ public class Laboration2 {
 		while (true) {
 			if (hashArray[probe] == 0) {
 				System.out.println("Number of probes: " + probesDone);
-				if (ld <= lu) ld++; else lu++;
 				return probe;
 			}
-			
-			if (ld <= lu) probe++; else probe--;
-			if(probe == hashArray.length) probe = 0;
-	
-			
+			probe++;
+			if (probe == hashArray.length)
+				probe = 0;
+
 			probesDone++;
-			
+
 		}
+	}
+
+	public int linearProbingMod1(int hx, int[] hashArray) {
+		int probe = hx % hashArray.length;
+		int probesDone = 0;
+		while (true) {
+			if (hashArray[probe] == 0) {
+				System.out.println("Number of probes: " + probesDone);
+				if (ld <= lu)
+					ld++;
+				else
+					lu++;
+				return probe;
+			}
+			if (ld <= lu)
+				probe++;
+			else
+				probe--;
+			if (probe == hashArray.length)
+				probe = 0;
+
+			probesDone++;
+
+		}
+	}
+
+	public int linearProbingMod2(int hx, int[] hashArray, int c) {
+		int probe = hx % hashArray.length;
+		// int probesDone = 0;
+		int j;
+		while (true) {
+			if (hashArray[probe] == 0) {
+				j = probe;
+				if (Math.abs(j - hx) <= c) {
+					return j;
+				} else {
+					int _j = hx;
+					// while((hx <= _j) && (_j >= (hx+c)) && (Math.abs(j-hy) <=// c)){
+
+				//}
+			}
+		}
+
+		if (probe == hashArray.length)
+			probe = 0;
+		// probesDone++;
+
+	}
+
 	}
 
 	public static void main(String[] args) {
@@ -51,16 +98,14 @@ public class Laboration2 {
 		hashArray = new int[k];
 		return hashArray;
 	}
-	
-	public Node LinkedList(int n){
-		Node currentNode  = new Node(0, n);
-		for(int i = 1; i != n;i++){
-			Node newNode  = new Node(i, n);
+
+	public Node LinkedList(int n) {
+		Node currentNode = new Node(0, n);
+		for (int i = 1; i != n; i++) {
+			Node newNode = new Node(i, n);
 			currentNode.setSucc(newNode);
 			currentNode = currentNode.getSucc();
 		}
 		return currentNode;
 	}
 }
-
-
