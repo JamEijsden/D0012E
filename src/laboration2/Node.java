@@ -5,9 +5,9 @@ public class Node {
 	Node succ, pred;
 	int value, key, length;
 	
-	 public Node(int key, Node s, Node p, int length){
-		 this.succ = s;
-		 this.pred = p;
+	 public Node(int key, int length){
+		 this.succ = null;
+		 this.pred = null;
 		 this.key = key;
 		 this.length = length;
 	}
