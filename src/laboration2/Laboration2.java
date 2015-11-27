@@ -47,4 +47,16 @@ public class Laboration2 {
 		hashArray = new int[k];
 		return hashArray;
 	}
+	
+	public Node LinkedList(int n){
+		Node currentNode  = new Node(0, n);
+		for(int i = 1; i != n;i++){
+			Node newNode  = new Node(i, n);
+			currentNode.setSucc(newNode);
+			currentNode = currentNode.getSucc();
+		}
+		return currentNode;
+	}
 }
+
+
