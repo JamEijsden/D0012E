@@ -13,15 +13,11 @@ public class Laboration2 {
 		while (true) {
 			if (hashArray[probe] == 0) {
 				System.out.println("Number of probes: " + probesDone);
+				if (ld <= lu) ld++; else lu++;
 				return probe;
 			}
-			if (ld <= lu) {
-				probe++;
-				ld++;
-			} else {
-				probe--;
-				lu++;
-			}
+			
+			if (ld <= lu) probe++; else probe--;
 			if(probe == hashArray.length) probe = 0;
 	
 			
