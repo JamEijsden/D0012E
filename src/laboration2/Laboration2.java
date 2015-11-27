@@ -36,11 +36,15 @@ public class Laboration2 {
 	public void insert() { // the n will be hashed before inserting, later.
 		int[] listElement = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19 };
 		for (int i = 0; i < 10; i++) {
-			int hashedValue = listElement[i];
-			int index = this.linearProbing(hashedValue, hashArray);
+			int hashedValue = hashFunction(listElement[i]);			
+			int index = this.linearProbingMod1(hashedValue, hashArray);
 			hashArray[index] = hashedValue;
 			System.out.println(Arrays.toString(hashArray));
 		}
+	}
+	public int hashFunction(int key) {
+		return (key*(key+3) % (hashArray.length));
+		
 	}
 
 	public int[] createStorage(int k) {
