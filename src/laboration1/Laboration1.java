@@ -1,4 +1,4 @@
-package laborations;
+package laboration1;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
