@@ -52,7 +52,7 @@ public class Laboration2 {
 
 	public int linearProbingMod2(int hx, int c) {
 		int probe = hx % hashArray.length;
-		// int probesDone = 0;
+		int probesDone = 0;
 		int j;
 		while (true) {
 			if (hashArray[probe] == 0) {
@@ -70,6 +70,7 @@ public class Laboration2 {
 						}
 					}
 					System.out.println("FAAAIALED NOT DOONOE"); 
+					return
 					
 					
 					
@@ -78,7 +79,10 @@ public class Laboration2 {
 
 			if (probe == hashArray.length)
 				probe = 0;
-			// probesDone++;
+			if (probe == -1)
+				probe = hashArray.length - 1;
+
+			probesDone++;
 
 		}
 
