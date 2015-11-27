@@ -64,7 +64,7 @@ public class Laboration2 {
 					int y = 0;
 					for(_j = hx; _j <= (hx + c); _j++){
 						y = hashArray[_j];
-						if(Math.abs(j - hashFunction(y)) <= c) {
+						if(Math.abs(j - hashFunction(y)) <= c && y != 0) {
 							hashArray[j] = y;
 							return _j;
 						}
