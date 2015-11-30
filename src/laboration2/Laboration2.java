@@ -214,6 +214,8 @@ public class Laboration2 {
 		return new int[k];
 	}
 
+/// MOX PLAYGROUND! ------------------------------------
+	
 	public Node LinkedList(int n) {
 		Node currentNode = new Node(0, n);
 		for (int i = 1; i != n; i++) {
@@ -222,5 +224,20 @@ public class Laboration2 {
 			currentNode = currentNode.getSucc();
 		}
 		return currentNode;
+	}
+
+	
+	public void linearProbing(int x, Node n) {
+		int hx = hashFunction(x);
+		int probe = hx % n.length;
+		int probesDone = 0;
+		Node current = n;
+		while (!n.compareKeys(probe)) {
+			 current = current.getSucc();
+		}
+		while (!current.isEmpty(probe)){
+			current = current.getSucc();
+		}	
+			current.setValue(x);
 	}
 }

@@ -9,11 +9,12 @@ public class Node {
 		 this.succ = null;
 		 this.pred = null;
 		 this.key = key;
+		 this.value = 0;
 		 this.length = length;
 	}
 
-	public boolean isEmpty(){
-		if (Node.this.key == 0) {
+	public boolean isEmpty(int p){
+		if (this.value == 0) {
 			return true;
 		}
 		else{
@@ -26,7 +27,7 @@ public class Node {
 			}
 	
 	public void setSucc(Node s){
-		this.succ = s;
+		this.succ =  s;
 	}
 	
 	public void setPred(Node p){
@@ -46,6 +47,17 @@ public class Node {
 		this.value = v;
 	}
 	
+	public int getLength(){
+		return this.length;
+	}
 	
+	public boolean compareKeys(int k){
+		if (this.key == k){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 
 }
