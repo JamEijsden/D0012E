@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Laboration2 {
 	private int[] hashArray, emptyArray, valueArray;
-	int ld = 0, lu = 0, c, probesDone, longestCollChain, insertionCollEncounters;
+	int ld = 0, lu = 0, c, probesDone, longestCollChain, insertionCollEncounters, numberRehash;
 	long startTime, endTime, totalTime, startTime2, endTime2, totalTime2;
 
 	public Laboration2(int size, int[] testValues) {
@@ -18,6 +18,7 @@ public class Laboration2 {
 
 	public void resetVariables() {
 		longestCollChain = 0;
+		numberRehash = 0;
 		insertionCollEncounters = 0;
 		probesDone = 0;
 		hashArray = emptyArray.clone();
@@ -28,6 +29,8 @@ public class Laboration2 {
 		System.out.println("Longest Collision Chain: " + longestCollChain);
 		System.out.println("Number of insertions that encountered collisions: " + insertionCollEncounters);
 		System.out.println("Number of total probes/collisions: " + probesDone);
+		System.out.println("Number rehashes: " + numberRehash);
+		System.out.println("Ran with C set to: " + c);
 		System.out.println("Start values: " + Arrays.toString(valueArray));
 	}
 
@@ -89,14 +92,17 @@ public class Laboration2 {
 
 	public int linearProbingMod2(int hx, int c, int[] array) {
 		int probe = hx % array.length;
-		probesDone = 0;
-
+		probesDone = 0; 
+		int collChain = 0, encColl = 0;
+		
 		int j;
 		while (true) {
 			if (array[probe] == 0) {
+				if (encColl == 1)
+					insertionCollEncounters++;
 				j = probe;
 				if (Math.abs(j - hx) <= c) {
-					System.out.println("[j] <- x");
+					//System.out.println("[j] <- x");
 					return j;
 				} else {
 					int _j;
@@ -109,42 +115,46 @@ public class Laboration2 {
 						if (Math.abs(j - hashFunction(y)) <= c && y != 0) {
 
 							array[j] = y;
-							System.out.println("[_j] <- x, [j] <- y");
+							//System.out.println("[_j] <- x, [j] <- y");
+							if (encColl == 1)
+								insertionCollEncounters++;
 							return _j;
 						}
 					}
-					System.out.println("Beginning rehash");
-					array = rehash(array);
+					//System.out.println("Beginning rehash: " +Arrays.toString(array));
+					int[] newArray = rehash(array);
 
-					System.out.println("<<<<< Rehashing done >>>>>\n" + Arrays.toString(array));
-					return linearProbingMod2(hx, this.c, array);
+					//System.out.println("<<<<< Rehashing done >>>>>\n" + Arrays.toString(newArray));
+					hashArray = newArray.clone();
+					if (encColl == 1)
+						insertionCollEncounters++;
+					return linearProbingMod2(hx, this.c, hashArray);
 
 				}
 			}
 			probe++;
-			if (probe == array.length)
+			if (probe == hashArray.length)
 				probe = 0;
-
+		
+			if (collChain > longestCollChain)
+				longestCollChain = collChain;
+			collChain++;
 			probesDone++;
+			encColl = 1;
 
 		}
 	}
 
 	public static void main(String[] args) {
-		// int[] testArray = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65,
-		// 33, 92, 21, 21, 21, 87, 39, 19 };
-		int[] testArray = { 1, 65, 2, 7, 89, 23, 65, 23, 673, 78, 2, 123, 90, 27, 872, 63, 871, 47, 156, 92, 18, 72, 92,
-				45, 16, 52, 86, 27, 61 };
+		int[] testArray = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19 };
+		//int[] testArray = {1, 65, 2, 7, 89, 23, 65, 23, 6};
 		Laboration2 lab = new Laboration2(testArray.length, testArray);
 
-		lab.c = 2;
-		// lab.linearTest();
-		// lab.linearMod1Test();
-		for (int i = 0; i < testArray.length; i++) {
-			int x = testArray[i];
-			lab.insert(x, lab.hashArray);
-		}
-		System.out.println("Tests done!");
+		lab.c = 17;
+		lab.linearTest();
+		lab.linearMod1Test();
+		lab.linearMod2Test();
+		System.out.println("Tests done!\n");
 
 	}
 
@@ -152,12 +162,13 @@ public class Laboration2 {
 													// inserting, later.
 		int hashedValue = hashFunction(x);
 		// System.out.println("Probing " + x + " hashed " + hashedValue);
-		int index = this.linearProbingMod2(hashedValue, this.c, hashArray);
+		int index = this.linearProbingMod2(hashedValue, this.c, hashTable);
 		hashTable[index] = x;
 		return hashTable;
 	}
 
 	public int[] rehash(int[] hashTable) {
+		numberRehash++;
 		int[] newHashTable = createStorage(hashTable.length * 2);
 		for (int i = 0; i < hashTable.length; i++) {
 			if (hashTable[i] != 0)
@@ -203,6 +214,20 @@ public class Laboration2 {
 		printVariables("Mod1");
 		System.out.println("Execution time: " + formatter.format((totalTime) / 1000d) + " seconds\n");
 
+	}
+	public void linearMod2Test(){
+		int x;
+		resetVariables();
+		NumberFormat formatter = new DecimalFormat("#0.00000");
+		startTime = System.currentTimeMillis();
+		for (int i = 0; i < valueArray.length; i++) {
+			x = valueArray[i];
+			insert(x, hashArray);
+		}
+		endTime = System.currentTimeMillis();
+		totalTime = endTime - startTime;
+		printVariables("Mod2");
+		System.out.println("Execution time: " + formatter.format((totalTime) / 1000d) + " seconds\n");
 	}
 
 	public int hashFunction(int key) {
