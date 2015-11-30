@@ -58,27 +58,36 @@ public class Laboration2 {
 			if (hashArray[probe] == 0) {
 				j = probe;
 				if (Math.abs(j - hx) <= c) {
+					System.out.println("[j] <- x");
 					return j;
 				} else {
 					int _j;
 					int y = 0;
-					for(_j = hx; _j <= (hx + c); _j++){
-						y = hashArray[_j];
-						if(Math.abs(j - hashFunction(y)) <= c && y != 0) {
+					for (_j = hx; _j <= (hx + c); _j++) {
+						if (Math.abs(j - hashFunction(y)) <= c && y != 0) {
+							if (_j > hashArray.length - 1) {
+								//_j = (_j - (hashArray.length - 1)) - 1;
+								_j = hashArray.length;
+							}
+							y = hashArray[_j];
 							hashArray[j] = y;
+							System.out.println("[j] <- y");
 							return _j;
-						} else {
-							for 
 						}
 					}
-					System.out.println("FAAAIALED NOT DOONOE"); 
-					return probe;
-					
-					
-					
+					int reHx;
+					for (int i = 0; i < hashArray.length; i++) {
+						reHx = hashArray[i];
+						if (reHx != 0)
+							System.out.println("Rehashing: " + reHx);
+							insert(reHx);
+					}
+
+					return 0;
+
 				}
 			}
-
+			probe++;
 			if (probe == hashArray.length)
 				probe = 0;
 			if (probe == -1)
@@ -102,8 +111,9 @@ public class Laboration2 {
 
 	public void insert(int x) { // the n will be hashed before inserting, later.
 		int hashedValue = hashFunction(x);
-		int index = this.linearProbingMod1(hashedValue, hashArray);
-		hashArray[index] = x;
+		int index = this.linearProbingMod2(hashedValue, 7);
+		if (index != 0)
+			hashArray[index] = x;
 		System.out.println(Arrays.toString(hashArray));
 	}
 
