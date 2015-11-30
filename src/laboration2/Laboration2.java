@@ -67,10 +67,12 @@ public class Laboration2 {
 						if(Math.abs(j - hashFunction(y)) <= c && y != 0) {
 							hashArray[j] = y;
 							return _j;
+						} else {
+							for 
 						}
 					}
 					System.out.println("FAAAIALED NOT DOONOE"); 
-					return
+					return probe;
 					
 					
 					
@@ -90,19 +92,19 @@ public class Laboration2 {
 
 	public static void main(String[] args) {
 		Laboration2 lab = new Laboration2();
+		int[] listElement = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19 };
 		lab.createStorage(10);
-		lab.insert();
+		for (int i = 0; i < 10; i++) {
+			lab.insert(listElement[i]);
+		}
 
 	}
 
-	public void insert() { // the n will be hashed before inserting, later.
-		int[] listElement = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19 };
-		for (int i = 0; i < 10; i++) {
-			int hashedValue = hashFunction(listElement[i]);
-			int index = this.linearProbingMod1(hashedValue, hashArray);
-			hashArray[index] = hashedValue;
-			System.out.println(Arrays.toString(hashArray));
-		}
+	public void insert(int x) { // the n will be hashed before inserting, later.
+		int hashedValue = hashFunction(x);
+		int index = this.linearProbingMod1(hashedValue, hashArray);
+		hashArray[index] = x;
+		System.out.println(Arrays.toString(hashArray));
 	}
 
 	public int hashFunction(int key) {
