@@ -11,8 +11,8 @@ public class Laboration2 {
 	long startTime, endTime, totalTime, startTime2, endTime2, totalTime2;
 
 	public Laboration2(int size, int[] testValues) {
-		this.hashArray = createStorage(size);
-		this.emptyArray = hashArray.clone();
+		this.emptyArray = createStorage(size);
+		this.hashArray = emptyArray.clone();
 		this.valueArray = testValues;
 	}
 
@@ -154,9 +154,9 @@ public class Laboration2 {
 	}
 
 	public static void main(String[] args) {
-		int[] testArray = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19,11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19,11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19,11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19};
+		int[] testArray = {11, 65, 33, 92, 21, 48, 21, 87, 39, 19};
 		//int[] testArray = {1, 65, 2, 7, 89, 23, 65, 23, 6};
-		Laboration2 lab = new Laboration2(testArray.length, testArray);
+		Laboration2 lab = new Laboration2(20, testArray);
 
 		lab.c = 20;
 		//lab.linearTest();
