@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Laboration2 {
 	private int[] hashArray, emptyArray, valueArray;
-	int ld = 0, lu = 0, c, probesDone, longestCollChain, insertionCollEncounters, numberRehash;
+	int ld = 0, lu = 0, c, probesDone, longestCollChain, insertionCollEncounters, numberRehash, encColl = 0;
 	long startTime, endTime, totalTime, startTime2, endTime2, totalTime2;
 
 	public Laboration2(int size, int[] testValues) {
@@ -21,6 +21,7 @@ public class Laboration2 {
 		numberRehash = 0;
 		insertionCollEncounters = 0;
 		probesDone = 0;
+		encColl = 1;
 		hashArray = emptyArray.clone();
 	}
 
@@ -94,7 +95,7 @@ public class Laboration2 {
 		int hx = hashFunction(x);
 		int probe = hx % array.length;
 		probesDone = 0; 
-		int collChain = 0, encColl = 0;
+		int collChain = 0;
 		int j;
 		while (true) {
 			if (array[probe] == 0) {
@@ -120,7 +121,7 @@ public class Laboration2 {
 							array[j] = y;
 							//System.out.println("[_j] <- x, [j] <- y");
 							if (encColl == 1)
-								insertionCollEncounters++;
+								//insertionCollEncounters++;
 							array[_j] = x;
 							return array;
 						}
@@ -130,7 +131,7 @@ public class Laboration2 {
 					int[] newArray = rehash(array).clone();
 					array = newArray.clone();
 					if (encColl == 1)
-						insertionCollEncounters++;
+						//insertionCollEncounters++;
 					array = linearProbingMod2(hx, this.c, array);
 					//System.out.println("Size of list " + array.length);
 					return array;
@@ -145,6 +146,7 @@ public class Laboration2 {
 			if (collChain > longestCollChain)
 				longestCollChain = collChain;
 			collChain++;
+			
 			probesDone++;
 			encColl = 1;
 		}
@@ -172,7 +174,6 @@ public class Laboration2 {
 
 	public int[] rehash(int[] hashTable) {
 		numberRehash++;
-		int hashValue, index = 0;
 		int[] newHashTable = createStorage(hashTable.length * 2);
 		
 		for (int i = 0; i < hashTable.length; i++) {
