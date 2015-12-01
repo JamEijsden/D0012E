@@ -31,7 +31,7 @@ public class Laboration2 {
 		System.out.println("Number of total probes/collisions: " + probesDone);
 		System.out.println("Number rehashes: " + numberRehash);
 		System.out.println("Ran with C set to: " + c);
-		System.out.println("Start values: " + Arrays.toString(valueArray));
+		System.out.println("Start size of inputlist: " + valueArray.length);
 	}
 
 	public int linearProbing(int hx, int[] array) {
@@ -90,11 +90,11 @@ public class Laboration2 {
 		}
 	}
 
-	public int linearProbingMod2(int hx, int c, int[] array) {
+	public int[] linearProbingMod2(int x, int c, int[] array) {
+		int hx = hashFunction(x);
 		int probe = hx % array.length;
 		probesDone = 0; 
 		int collChain = 0, encColl = 0;
-		
 		int j;
 		while (true) {
 			if (array[probe] == 0) {
@@ -102,12 +102,15 @@ public class Laboration2 {
 					insertionCollEncounters++;
 				j = probe;
 				if (Math.abs(j - hx) <= c) {
-					//System.out.println("[j] <- x");
-					return j;
+					
+					array[j] = x;
+					return array;
 				} else {
 					int _j;
 					int y = 0;
-					for (_j = hx; _j <= (hx + c); _j++) {
+					_j = hx;
+					while((_j <= (hx + c)) && y != 0) {
+						System.out.println("hx: " + hx +", c: "+ c + ", y: "+y);
 						if (_j > array.length - 1)
 							_j = (_j - (array.length - 1)) - 1;
 						y = array[_j];
@@ -118,22 +121,25 @@ public class Laboration2 {
 							//System.out.println("[_j] <- x, [j] <- y");
 							if (encColl == 1)
 								insertionCollEncounters++;
-							return _j;
+							array[_j] = x;
+							return array;
 						}
+						_j++;
 					}
 					//System.out.println("Beginning rehash: " +Arrays.toString(array));
-					int[] newArray = rehash(array);
-
-					//System.out.println("<<<<< Rehashing done >>>>>\n" + Arrays.toString(newArray));
-					hashArray = newArray.clone();
+					int[] newArray = rehash(array).clone();
+					array = newArray.clone();
 					if (encColl == 1)
 						insertionCollEncounters++;
-					return linearProbingMod2(hx, this.c, hashArray);
+					array = linearProbingMod2(hx, this.c, array);
+					//System.out.println("Size of list " + array.length);
+					return array;
 
 				}
 			}
+			
 			probe++;
-			if (probe == hashArray.length)
+			if (probe == array.length)
 				probe = 0;
 		
 			if (collChain > longestCollChain)
@@ -141,18 +147,18 @@ public class Laboration2 {
 			collChain++;
 			probesDone++;
 			encColl = 1;
-
 		}
+		
 	}
 
 	public static void main(String[] args) {
-		int[] testArray = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19 };
+		int[] testArray = { 11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19,11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19,11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19,11, 65, 33, 92, 21, 21, 21, 87, 39, 19, 11, 65, 33, 92, 21, 21, 21, 87, 39, 19};
 		//int[] testArray = {1, 65, 2, 7, 89, 23, 65, 23, 6};
 		Laboration2 lab = new Laboration2(testArray.length, testArray);
 
-		lab.c = 17;
-		lab.linearTest();
-		lab.linearMod1Test();
+		lab.c = 20;
+		//lab.linearTest();
+		//lab.linearMod1Test();
 		lab.linearMod2Test();
 		System.out.println("Tests done!\n");
 
@@ -160,19 +166,19 @@ public class Laboration2 {
 
 	public int[] insert(int x, int[] hashTable) { // the n will be hashed before
 													// inserting, later.
-		int hashedValue = hashFunction(x);
-		// System.out.println("Probing " + x + " hashed " + hashedValue);
-		int index = this.linearProbingMod2(hashedValue, this.c, hashTable);
-		hashTable[index] = x;
+		hashTable = this.linearProbingMod2(x, this.c, hashTable);
 		return hashTable;
 	}
 
 	public int[] rehash(int[] hashTable) {
 		numberRehash++;
+		int hashValue, index = 0;
 		int[] newHashTable = createStorage(hashTable.length * 2);
+		
 		for (int i = 0; i < hashTable.length; i++) {
 			if (hashTable[i] != 0)
-				newHashTable = insert(hashTable[i], newHashTable);
+				newHashTable = this.linearProbingMod2(hashTable[i], this.c, newHashTable);
+				//System.out.println("Calling insert from hash, Size of list " + newHashTable.length);			
 		}
 		return newHashTable;
 
@@ -222,11 +228,12 @@ public class Laboration2 {
 		startTime = System.currentTimeMillis();
 		for (int i = 0; i < valueArray.length; i++) {
 			x = valueArray[i];
-			insert(x, hashArray);
+			hashArray = insert(x, hashArray).clone();
 		}
 		endTime = System.currentTimeMillis();
 		totalTime = endTime - startTime;
 		printVariables("Mod2");
+		System.out.println("End size of hashTable: " + hashArray.length);
 		System.out.println("Execution time: " + formatter.format((totalTime) / 1000d) + " seconds\n");
 	}
 
