@@ -95,6 +95,7 @@ public class Laboration2 {
 		int hx = hashFunction(x);
 		int probe = hx % array.length;
 		encColl = 0;
+		System.out.println("Probe: " +probe);
 		//probesDone = 0; 
 		int collChain = 0;
 		int j;
@@ -149,7 +150,6 @@ public class Laboration2 {
 		
 			
 			collChain++;
-			
 			probesDone++;
 			encColl = 1;
 		}
@@ -157,14 +157,16 @@ public class Laboration2 {
 	}
 
 	public static void main(String[] args) {
-		int[] testArray = {11, 65, 33, 92, 21, 48, 21, 87, 39, 19};
-		int[] temp = {61,0,0,74,32,0,48,0,0,0,56,71,0,28,0,13,8,1,0,0};
-		Laboration2 lab = new Laboration2(20, testArray);
-		lab.emptyArray = temp.clone();
-		lab.c = 3;
+		int[] testArray = {49007, 24793, 34070, 75944, 11994, 32572, 83360, 88733, 68197, 27454, 54886, 44671, 27958, 19232, 99108, 87829, 195, 97457, 47426, 89496, 68813, 1671, 57953, 41517, 95774, 98516, 76906, 84397, 11393, 61397, 7518, 77261, 3367, 40667, 18310, 60546, 70003, 32703, 15626, 84319, 60256, 4807, 51533, 75202, 83446, 9477, 37492, 93083, 34896, 26421, 86662, 85191, 50235, 3590, 13252, 79522, 70750, 29504, 76035, 72256, 74905, 58368, 64956, 54497, 7046, 26703, 94704, 92523, 13302, 45658, 87173, 22709, 76821, 26698, 95962, 47375, 29743, 18, 50340, 21049, 7672, 14822, 73564, 97969, 3943, 68525, 61014, 71114, 75575, 97946, 87277, 70689, 50585, 79747, 48143, 5652, 87187, 29651, 33418, 25783};
+		//int[] temp = {61,0,0,74,32,0,48,0,0,0,56,71,0,28,0,13,8,1,0,0};
+		Laboration2 lab = new Laboration2(100, testArray);
+		//lab.emptyArray = temp.clone();
+		lab.c = 75;
 		//lab.linearTest();
 		//lab.linearMod1Test()
 		lab.linearMod2Test();
+		//System.out.println(Arrays.toString(lab.genHashTable(500, 0.25)));
+		//System.out.println(Arrays.toString(lab.generateRandomList(3750)));
 		System.out.println("Tests done!\n");
 
 	}
@@ -250,15 +252,26 @@ public class Laboration2 {
 		return new int[k];
 	}
 	
-	public int[] genHashTable(int m, int loadFactor){
-		
-		return emptyArray;
+	public int[] genHashTable(int m, double loadFactor){
+		int[] hashTable = generateRandomList(m);
+		int n;
+		for (int i = 0; i < (((double) m) * (1.00 - loadFactor)); i++) {
+			n = (int) ((Math.random() * m));
+			while(hashTable[n] == 0){
+				n++;
+				if(n == m){
+					n = 0;
+				}
+			}
+			hashTable[n] = 0;	
+		}
+		return hashTable;
 		
 	}
 	public int[] generateRandomList(int k) {
 		int[] list = new int[k];
 		for (int i = 0; i < k; i++) {
-			int n = (int) ((Math.random() * 10000)+1);
+			int n = (int) ((Math.random() * 100000)+1);
 			list[i] = n;
 		}
 		// System.out.println(Arrays.toString(list));
