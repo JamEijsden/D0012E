@@ -94,10 +94,14 @@ public class Laboration2 {
 	public int[] linearProbingMod2(int x, int c, int[] array) {
 		int hx = hashFunction(x);
 		int probe = hx % array.length;
-		probesDone = 0; 
+		encColl = 0;
+		//probesDone = 0; 
 		int collChain = 0;
 		int j;
 		while (true) {
+			if (collChain > longestCollChain)
+				longestCollChain = collChain;
+			
 			if (array[probe] == 0) {
 				if (encColl == 1)
 					insertionCollEncounters++;
@@ -143,8 +147,7 @@ public class Laboration2 {
 			if (probe == array.length)
 				probe = 0;
 		
-			if (collChain > longestCollChain)
-				longestCollChain = collChain;
+			
 			collChain++;
 			
 			probesDone++;
@@ -155,12 +158,12 @@ public class Laboration2 {
 
 	public static void main(String[] args) {
 		int[] testArray = {11, 65, 33, 92, 21, 48, 21, 87, 39, 19};
-		//int[] testArray = {1, 65, 2, 7, 89, 23, 65, 23, 6};
+		int[] temp = {61,0,0,74,32,0,48,0,0,0,56,71,0,28,0,13,8,1,0,0};
 		Laboration2 lab = new Laboration2(20, testArray);
-
-		lab.c = 20;
+		lab.emptyArray = temp.clone();
+		lab.c = 3;
 		//lab.linearTest();
-		//lab.linearMod1Test();
+		//lab.linearMod1Test()
 		lab.linearMod2Test();
 		System.out.println("Tests done!\n");
 
@@ -227,7 +230,7 @@ public class Laboration2 {
 		resetVariables();
 		NumberFormat formatter = new DecimalFormat("#0.00000");
 		startTime = System.currentTimeMillis();
-		for (int i = 0; i < valueArray.length; i++) {
+		for (int i = 0; i < (valueArray.length/2)+1; i++) {
 			x = valueArray[i];
 			hashArray = insert(x, hashArray).clone();
 		}
@@ -246,31 +249,20 @@ public class Laboration2 {
 	public int[] createStorage(int k) {
 		return new int[k];
 	}
-
-/// MOX PLAYGROUND! ------------------------------------
 	
-	public Node LinkedList(int n) {
-		Node currentNode = new Node(0, n);
-		for (int i = 1; i != n; i++) {
-			Node newNode = new Node(i, n);
-			currentNode.setSucc(newNode);
-			currentNode = currentNode.getSucc();
+	public int[] genHashTable(int m, int loadFactor){
+		
+		return emptyArray;
+		
+	}
+	public int[] generateRandomList(int k) {
+		int[] list = new int[k];
+		for (int i = 0; i < k; i++) {
+			int n = (int) ((Math.random() * 10000)+1);
+			list[i] = n;
 		}
-		return currentNode;
+		// System.out.println(Arrays.toString(list));
+		return list;
 	}
 
-	
-	public void linearProbing(int x, Node n) {
-		int hx = hashFunction(x);
-		int probe = hx % n.length;
-		int probesDone = 0;
-		Node current = n;
-		while (!n.compareKeys(probe)) {
-			 current = current.getSucc();
-		}
-		while (!current.isEmpty(probe)){
-			current = current.getSucc();
-		}	
-			current.setValue(x);
-	}
 }
