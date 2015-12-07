@@ -164,8 +164,11 @@ public class Laboration2 {
 		Laboration2 lab = new Laboration2(100, testArray);
 		//lab.emptyArray = temp.clone();
 		lab.c =1;
-		//lab.linearTest();
-		//lab.linearMod1Test()
+		/*testInsertion(
+		 * ARG1, (0 = 0.25, 1 = 0.5, 2 = 0.75)
+		 * ARG2, (0 = Normal, 1 = Mod1, 2 = Mod2)
+		 * ARG3 (Number of inserts)
+		 */
 		lab.testInsertion(2, 0, 1000);
 		//System.out.println(Arrays.toString(lab.genHashTable(500, 0.25)));
 		//System.out.println(Arrays.toString(lab.generateRandomList(3750)));
