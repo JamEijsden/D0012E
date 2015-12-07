@@ -280,7 +280,7 @@ public class Laboration2 {
 		return list;
 	}
 	public void testInsertion(int lf, int testToDo,int numTests, int tableSize, int c){
-		int maxCol = 0, avgCol = 0, maxRehash = 0, avgChain = 0, avgRehash = 0, numInsertColl = 0;
+		int maxCol = 0, avgCol = 0, maxChain=0, maxRehash = 0, avgChain = 0, avgRehash = 0, numInsertColl = 0;
 		String testDone = "";
 		int[] tmpTable;
 		int x;
@@ -303,7 +303,7 @@ public class Laboration2 {
 				
 				if(numberRehash>maxRehash) maxRehash = numberRehash;
 				if(probesDone>maxCol) maxCol = probesDone;
-				if(longestCollChain>avgChain) avgChain = longestCollChain;
+				if(longestCollChain>maxChain) maxChain = longestCollChain;
 				if(insertionCollEncounters != 0) numInsertColl++;
 				avgCol += probesDone;
 				avgRehash += numberRehash;
@@ -327,7 +327,7 @@ public class Laboration2 {
 				
 				if(numberRehash>maxRehash) maxRehash = numberRehash;
 				if(probesDone>maxCol) maxCol = probesDone;
-				if(longestCollChain>avgChain) avgChain = longestCollChain;
+				if(longestCollChain>maxChain) maxChain = longestCollChain;
 				if(insertionCollEncounters != 0) numInsertColl++;
 				avgCol += probesDone;
 				avgRehash += numberRehash;
@@ -351,7 +351,7 @@ public class Laboration2 {
 				
 				if(numberRehash>maxRehash) maxRehash = numberRehash;
 				if(probesDone>maxCol) maxCol = probesDone;
-				if(longestCollChain>avgChain) avgChain = longestCollChain;
+				if(longestCollChain>maxChain) maxChain = longestCollChain;
 				if(insertionCollEncounters != 0) numInsertColl++;
 				avgCol += probesDone;
 				avgRehash += numberRehash;
@@ -362,10 +362,13 @@ public class Laboration2 {
 			
 		}
 		System.out.println("Test: " + testDone);
+		System.out.println("Max length of collision chains: " + maxChain);
 		System.out.println("Average length of collision chains: " + avgChain);
 		System.out.println("Number of insertions that encountered collisions: " + numInsertColl);
-		System.out.println("Number of total probes/collisions: " + avgCol);
+		System.out.println("Max number of collisions: " + maxCol);
+		System.out.println("Average number of collisions: " + avgCol);
 		System.out.println("max number of rehashes: " + maxRehash);
+		System.out.println("Average number of rehashes: " + avgRehash);
 	}
 
 }
