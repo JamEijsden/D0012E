@@ -168,8 +168,8 @@ public class Laboration2 {
 		 * ARG2, (0 = Normal, 1 = Mod1, 2 = Mod2)
 		 * ARG3 (Number of inserts)
 		 */
-		//lab.testInsertion(0, 2, 1000000);
-		System.out.println(Arrays.toString(lab.genHashTable(500, 0.9)));
+		lab.testInsertion(4, 0, 1000000);
+		//System.out.println(Arrays.toString(lab.genHashTable(500, 0.9)));
 		System.out.println("Tests done!\n");
 
 	}
@@ -248,7 +248,7 @@ public class Laboration2 {
 	}
 
 	public int hashFunction(int key) {
-		return key * (key + 3) % hashArray.length;
+		return key * (key + 3) / 3;
 
 	}
 
