@@ -279,21 +279,28 @@ public class Laboration2 {
 		// System.out.println(Arrays.toString(list));
 		return list;
 	}
-	public void testInsertion(int test, int numTests, int tableSize, int c){
+	public void testInsertion(int lf, int testToDo,int numTests, int tableSize, int c){
 		int maxCol = 0, avgCol = 0, maxRehash = 0, avgChain = 0, avgRehash = 0, numInsertColl = 0;
 		String testDone = "";
 		int[] tmpTable;
-		switch(test){
+		int x;
+		switch(lf){
 		//LOADFACTOR 0.25
 		case 0:
 			int[] table = {0, 0, 0, 17540, 12507, 5035, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19588, 6064, 0, 23942, 0, 18905, 0, 26516, 9415, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21854, 8293, 0, 0, 0, 0, 0, 24223, 0, 0, 0, 0, 0, 0, 9365, 0, 0, 0, 0, 0, 0, 12847, 9799, 8745, 8594, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21915, 15273, 0, 5019, 17614, 2874, 0, 2208, 0, 0, 7342, 5941, 0, 0, 739, 0, 0, 0, 0, 14203, 0, 4195, 0, 0, 15932, 0, 0, 15167, 20672, 0, 0, 10673, 13052, 0, 26310, 4046, 0, 0, 0, 27649, 0, 5370, 0, 0, 0, 0, 0, 0, 24793, 11897, 24556, 4465, 0, 0, 8407, 4725, 0, 0, 19544, 0, 0, 0, 0, 25290, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23084, 10927, 1264, 0, 12611, 11459, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3780, 17314, 14339, 0, 0, 0, 0, 20477, 28045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25215, 5682, 6388, 0, 0, 0, 22766, 0, 0, 0, 0, 0, 0, 0, 29497, 22172, 0, 0, 0, 10866, 0, 0, 0, 20462, 19717, 0, 0, 0, 10689, 0, 0, 0, 0, 22193, 11536, 0, 0, 24544, 12145, 16430, 0, 26151, 0, 1354, 0, 9107, 1926, 0, 0, 0, 3617, 16315, 19024, 12667, 0, 3341, 0, 15785, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1357, 10428, 0, 1836, 0, 0, 10460, 0, 0, 0, 0, 0, 16726, 0, 3928, 0, 21357, 0, 0, 0, 0, 12331, 17252, 17543, 16965, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10769, 15474, 0, 0, 0, 21963, 9890, 18315, 0, 0, 0, 0, 0, 6967, 532, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21730, 0, 0, 0, 0, 0, 15159, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29771, 21613, 27613, 0, 0, 0, 0, 29658, 0, 0, 0, 22552, 15285, 0, 0, 18792, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6458, 15453, 0, 0, 21186, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4747, 0, 4563, 0, 29951, 6753, 11322, 0, 0, 0, 4189, 3671, 8283, 13698, 14017, 1434, 0, 0, 0, 16125, 25321, 24732, 0, 0, 15538, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-			int x;
 			testDone = "Loadfactor 0.25";
 			for(int i = 0; i < numTests; i++){
 				resetVariables();
 				tmpTable = table.clone();
-				x = (int) ((Math.random() * 100000)+1);
-				linearProbing(hashFunction(x), tmpTable);
+				x = (int) ((Math.random() * 30000)+1);
+				if(testToDo == 0){
+					linearProbing(hashFunction(x), tmpTable);
+				}else if(testToDo == 1){
+					linearProbingMod1(hashFunction(x), tmpTable);
+				}else{
+					linearProbingMod2(hashFunction(x), this.c, tmpTable);
+				}
+				
 				if(numberRehash>maxRehash) maxRehash = numberRehash;
 				if(probesDone>maxCol) maxCol = probesDone;
 				if(longestCollChain>avgChain) avgChain = longestCollChain;
@@ -302,6 +309,56 @@ public class Laboration2 {
 				avgRehash += numberRehash;
 				avgChain += longestCollChain;
 			}
+			break;
+		case 1:
+			int[] table1 = {};
+			testDone = "Loadfactor 0.50";
+			for(int i = 0; i < numTests; i++){
+				resetVariables();
+				tmpTable = table1.clone();
+				x = (int) ((Math.random() * 30000)+1);
+				if(testToDo == 0){
+					linearProbing(hashFunction(x), tmpTable);
+				}else if(testToDo == 1){
+					linearProbingMod1(hashFunction(x), tmpTable);
+				}else{
+					linearProbingMod2(hashFunction(x), this.c, tmpTable);
+				}
+				
+				if(numberRehash>maxRehash) maxRehash = numberRehash;
+				if(probesDone>maxCol) maxCol = probesDone;
+				if(longestCollChain>avgChain) avgChain = longestCollChain;
+				if(insertionCollEncounters != 0) numInsertColl++;
+				avgCol += probesDone;
+				avgRehash += numberRehash;
+				avgChain += longestCollChain;
+			}
+			break;
+		case 2:
+			int[] table2 = {};
+			testDone = "Loadfactor 0.75";
+			for(int i = 0; i < numTests; i++){
+				resetVariables();
+				tmpTable = table2.clone();
+				x = (int) ((Math.random() * 30000)+1);
+				if(testToDo == 0){
+					linearProbing(hashFunction(x), tmpTable);
+				}else if(testToDo == 1){
+					linearProbingMod1(hashFunction(x), tmpTable);
+				}else{
+					linearProbingMod2(hashFunction(x), this.c, tmpTable);
+				}
+				
+				if(numberRehash>maxRehash) maxRehash = numberRehash;
+				if(probesDone>maxCol) maxCol = probesDone;
+				if(longestCollChain>avgChain) avgChain = longestCollChain;
+				if(insertionCollEncounters != 0) numInsertColl++;
+				avgCol += probesDone;
+				avgRehash += numberRehash;
+				avgChain += longestCollChain;
+			}
+			break;
+			
 			
 		}
 		System.out.println("Test: " + testDone);
