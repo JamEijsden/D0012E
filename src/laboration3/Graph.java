@@ -1,3 +1,8 @@
+
+
+
+ 		
+
 package laboration3;
 
 import java.util.ArrayList;
@@ -6,10 +11,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Graph {
-	int size;
+	//int size;
 	HashMap<String, ArrayList<Edge>> graph;
-	public Graph(int size){
-		this.size = size;
+	public Graph(){
+		//this.size = size;
 		this.graph = new HashMap<String,ArrayList<Edge>>();
 	}
 	
@@ -44,6 +49,10 @@ public class Graph {
 			this.weigth = weight;
 		}
 		
+		public void setWeight(int i){
+			this.weigth = i;
+		}
+		
 		public int getWeigth(){
 			return this.weigth;
 		}
@@ -51,6 +60,7 @@ public class Graph {
 		public String getDest(){
 			return this.dest;
 		}
+
 	}
 	
 	public int V(){
@@ -86,9 +96,9 @@ public class Graph {
 		return neighbours;
 	}
 	
-	public static void main(String[] args) {
-        Graph G = new Graph(10);
-        G.addEdge("A", "B", 5);
+	public Graph initGraph(Graph G) {
+		
+        G.addEdge("A", "B", 38);
         G.addEdge("A", "C", 2);
         G.addEdge("C", "D", 7);
         G.addEdge("D", "E", 8);
@@ -109,6 +119,6 @@ public class Graph {
             }
             System.out.println();
         }
-
+        return G;
     }
 }
