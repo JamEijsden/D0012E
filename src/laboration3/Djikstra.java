@@ -8,12 +8,16 @@ import java.util.Set;
 
 import laboration3.DAryHeap.Node;
 import laboration3.Graph.Edge;
+import laboration3.Graph.Vertex;
 
 public class Djikstra {
 
 	HashMap<String, Integer> dist;
 	LinkedHashMap<String, Integer> perm;
 	HashMap<String, String> parent;
+	// HEAP IMPL
+	ArrayList<Node> visited = new ArrayList<Node>();
+	Node[] S = {};
 	DAryHeap Q;
 	Graph g;
 	String destination;
@@ -50,17 +54,36 @@ public class Djikstra {
 		Node s = Q.new Node(source);
 		s.dist = 0;
 		Q.insert(s);
+		visited.add(s);
 	}
 
-	public void DijkstraHeap(){
-		while(!Q.isEmpty()){
-			Node min = Q.extractMin();
-			min.unvisited = false;
+	public void DijkstraHeap() {
+		Node u;
+		while (!Q.isEmpty()) {
+			u = Q.extractMin();
+			S[S.length] = u;
+			if (visited.contains(u))
+				visited.remove(u);
+			visited.trimToSize();
+
+			for (Edge x : g.graph.get(u.id).adjecent) {
+				Node new_node = Q.new Node(x.getDest());
+				new_node.dist = x.getWeigth();
+				for (Node n : S)
+					if (new_node.id == n.id)
+						continue;
+				int new_dist = new_node.dist + u.dist;
+				new_node.dist = new_dist;
+				if(!visited.contains(new_node.id)){
+					Q.decreaseKey();
+				}
+			}
+
 		}
 	}
 
 	public void Dijkstra() {
-		HashMap<String, ArrayList<Edge>> graph = this.g.graph;
+		HashMap<String, Vertex> graph = this.g.graph;
 		String[] stringArray = this.perm.keySet().toArray(new String[this.perm.keySet().size()]);
 		while (!((stringArray[stringArray.length - 1] == this.destination))) {
 			Edge candidate = null;
@@ -128,5 +151,5 @@ public class Djikstra {
 		chain += stop;
 		System.out.println(chain);
 	}
-	
+
 }
