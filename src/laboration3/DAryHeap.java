@@ -48,22 +48,26 @@ class DAryHeap {
 			return (heapSize == 0);
 		}
 
-		private int getLeftChildIndex(int nodeIndex) {
-			return 2 * nodeIndex + 1;
+		private int getParentIndex(int i) {
+			return (i - 1) / d;
 		}
 
-		private int getRightChildIndex(int nodeIndex) {
-			return 2 * nodeIndex + 2;
-		}
-
-		private int getParentIndex(int nodeIndex) {
-			return (nodeIndex - 1) / 2;
+		/** Function to get index of k th child of i **/
+		private int kthChild(int i, int k) {
+			return d * i + k;
 		}
 
 		public class HeapException extends RuntimeException {
 			public HeapException(String message) {
 				super(message);
 			}
+		}
+
+		public void insert(int i) {
+			if (heapSize == data.length) {
+				// increase Size of heap
+			}
+
 		}
 	}
 }
