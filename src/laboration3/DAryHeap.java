@@ -16,10 +16,11 @@ class DAryHeap {
 	}
 
 	public class Node {
-		int dist = -1;
+		Integer dist = -1;
 		String id;
 		Node parent = null;
 		Boolean unvisited = true;
+		Integer position;
 
 		public Node(String id) {
 			this.id = id;
@@ -70,8 +71,8 @@ class DAryHeap {
 		}
 	}
 
-	public void insert(String id) {
-		Node n = new Node(id);
+	public void insert(Node n) {
+	
 		if (heapSize == data.length) {
 			throw new HeapException("Heap is full");
 		} else {
