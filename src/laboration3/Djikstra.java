@@ -15,8 +15,8 @@ public class Djikstra {
 	HashMap<String, Integer> dist;
 	LinkedHashMap<String, Integer> perm;
 	HashMap<String, String> parent;
-	//HEAP IMPL
-	Node[] visited = {};
+	// HEAP IMPL
+	ArrayList<Node> visited = new ArrayList<Node>();
 	Node[] S = {};
 	DAryHeap Q;
 	Graph g;
@@ -54,19 +54,31 @@ public class Djikstra {
 		Node s = Q.new Node(source);
 		s.dist = 0;
 		Q.insert(s);
-		visited[visited.length] = s;
+		visited.add(s);
 	}
 
-	public void DijkstraHeap(){
+	public void DijkstraHeap() {
 		Node u;
-		while(!Q.isEmpty()){
+		while (!Q.isEmpty()) {
 			u = Q.extractMin();
 			S[S.length] = u;
-			for(Node n : visited);
-			for(Edge v : g.graph.get(u.id).adjecent){
-				Node p = u;
+			if (visited.contains(u))
+				visited.remove(u);
+			visited.trimToSize();
+
+			for (Edge x : g.graph.get(u.id).adjecent) {
+				Node new_node = Q.new Node(x.getDest());
+				new_node.dist = x.getWeigth();
+				for (Node n : S)
+					if (new_node.id == n.id)
+						continue;
+				int new_dist = new_node.dist + u.dist;
+				new_node.dist = new_dist;
+				if(!visited.contains(new_node.id)){
+					Q.decreaseKey();
+				}
 			}
-			
+
 		}
 	}
 
@@ -139,5 +151,5 @@ public class Djikstra {
 		chain += stop;
 		System.out.println(chain);
 	}
-	
+
 }

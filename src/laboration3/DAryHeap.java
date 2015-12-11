@@ -28,10 +28,11 @@ class DAryHeap {
 		}
 	}
 
-	public void decreaseKey(Node n) {
-		
-		{
-			
+	public void decreaseKey(Node n, int value) {
+		if (value < n.dist) {
+			int index = n.position;
+			data[index].dist = value;
+			heapifyUp(index);
 		}
 	}
 
@@ -72,14 +73,14 @@ class DAryHeap {
 	}
 
 	public void insert(Node n) {
-	
+
 		if (heapSize == data.length) {
 			throw new HeapException("Heap is full");
 		} else {
 			n.position = heapSize;
 			data[heapSize++] = n;
 			System.out.println(n);
-			
+
 			heapifyUp(heapSize - 1);
 		}
 	}
@@ -88,6 +89,8 @@ class DAryHeap {
 		Node tmp = data[childInd];
 		while (childInd > 0 && tmp.dist < data[getParentIndex(childInd)].dist) {
 			data[childInd] = data[getParentIndex(childInd)];
+			data[childInd].position = tmp.position;
+			tmp.position = childInd;
 			childInd = getParentIndex(childInd);
 		}
 		data[childInd] = tmp;
@@ -98,9 +101,12 @@ class DAryHeap {
 		Node tmp = data[ind];
 		while (kthChild(ind, 1) < heapSize) {
 			child = minChild(ind);
-			if (data[child].dist < tmp.dist)
+			if (data[child].dist < tmp.dist) {
+				data[ind].position = data[child].position;
+				data[child].position = ind;
 				data[ind] = data[child];
-			else
+
+			} else
 				break;
 			ind = child;
 		}
