@@ -12,35 +12,23 @@ import java.util.Set;
 
 public class Graph {
 	//int size;
-	HashMap<String, ArrayList<Edge>> graph;
+	HashMap<String, Vertex> graph;
 	public Graph(){
 		//this.size = size;
-		this.graph = new HashMap<String,ArrayList<Edge>>();
+		this.graph = new HashMap<String, Vertex>();
 	}
 	
-	/*public class Vertex{
+	public class Vertex{
 		String id;
-		ArrayList<Edge> connections;
-		
-		public Vertex(String id){
+		ArrayList<Edge> adjecent;
+		public Vertex(String id, Edge edge){
+			adjecent = new ArrayList<Edge>();
 			this.id = id;
-			this.connections = new ArrayList<Edge>();
-		}
-		
-		public void addConnection(Edge e){
-			this.connections.add(e);
-		}
-		
-		public ArrayList<Edge> getAdjacent(){
-			return this.connections;
-		}
-		
-		public String getId(){
-			return this.id;
+			adjecent.add(edge);
 		}
 		
 	}
-	*/
+	
 	public class Edge{
 		private String dest;
 		private int weigth;
@@ -67,21 +55,20 @@ public class Graph {
 		return graph.size();
 	}
 	public void addEdge(String id, String dest, int weight){
+		
 		Edge e = new Edge(dest, weight);
 		Edge dE = new Edge(id, weight);
 		if(!this.graph.containsKey(id)) {
-			ArrayList<Edge> newConn = new ArrayList<Edge>();
-			newConn.add(e);
-			this.graph.put(id, newConn);
+			Vertex v = new Vertex(id,e);
+			this.graph.put(id, v);
 		} else
-			this.graph.get(id).add(e);
+			this.graph.get(id).adjecent.add(e);
 		
 		if(!this.graph.containsKey(dest)){
-			ArrayList<Edge> newConn = new ArrayList<Edge>();
-			newConn.add(dE);
-			this.graph.put(dest, newConn);
-		}else
-			this.graph.get(dest).add(dE);		
+			Vertex v = new Vertex(dest,dE);
+			this.graph.put(dest, v);
+		} else
+			this.graph.get(dest).adjecent.add(dE);		
 	}
 	
 	public Set<String> Vertices (){
@@ -89,9 +76,9 @@ public class Graph {
 	}
 	
 	public String[] adjacentTo(String id){
-		String[] neighbours = new String[this.graph.get(id).size()];
-		for(int i = 0; i < this.graph.get(id).size(); i++){
-			neighbours[i] = (this.graph.get(id)).get(i).getDest();	
+		String[] neighbours = new String[this.graph.get(id).adjecent.size()];
+		for(int i = 0; i < neighbours.length; i++){
+			neighbours[i] = (this.graph.get(id).adjecent).get(i).getDest();	
 		}
 		return neighbours;
 	}

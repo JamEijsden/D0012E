@@ -8,12 +8,16 @@ import java.util.Set;
 
 import laboration3.DAryHeap.Node;
 import laboration3.Graph.Edge;
+import laboration3.Graph.Vertex;
 
 public class Djikstra {
 
 	HashMap<String, Integer> dist;
 	LinkedHashMap<String, Integer> perm;
 	HashMap<String, String> parent;
+	//HEAP IMPL
+	Node[] visited = {};
+	Node[] S = {};
 	DAryHeap Q;
 	Graph g;
 	String destination;
@@ -50,17 +54,24 @@ public class Djikstra {
 		Node s = Q.new Node(source);
 		s.dist = 0;
 		Q.insert(s);
+		visited[visited.length] = s;
 	}
 
 	public void DijkstraHeap(){
+		Node u;
 		while(!Q.isEmpty()){
-			Node min = Q.extractMin();
-			min.unvisited = false;
+			u = Q.extractMin();
+			S[S.length] = u;
+			for(Node n : visited);
+			for(Edge v : g.graph.get(u.id).adjecent){
+				Node p = u;
+			}
+			
 		}
 	}
 
 	public void Dijkstra() {
-		HashMap<String, ArrayList<Edge>> graph = this.g.graph;
+		HashMap<String, Vertex> graph = this.g.graph;
 		String[] stringArray = this.perm.keySet().toArray(new String[this.perm.keySet().size()]);
 		while (!((stringArray[stringArray.length - 1] == this.destination))) {
 			Edge candidate = null;
