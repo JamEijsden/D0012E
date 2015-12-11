@@ -57,7 +57,7 @@ public class Djikstra {
 		visited.add(s);
 	}
 
-	public void DijkstraHeap() {
+	public Node[] DijkstraHeap() {
 		Node u;
 		while (!Q.isEmpty()) {
 			u = Q.extractMin();
@@ -75,81 +75,19 @@ public class Djikstra {
 				int new_dist = new_node.dist + u.dist;
 				new_node.dist = new_dist;
 				if(!visited.contains(new_node.id)){
-					Q.decreaseKey();
+					Q.decreaseKey(new_node, new_node.dist);
+					visited.add(new_node);
+				} else {
+					for(int j = 0; j < visited.size(); j++)
+						if(visited.get(j).id == new_node.id && visited.get(j).dist > new_node.dist){
+							Q.decreaseKey(new_node, new_node.dist);
+							visited.add(j, new_node);
+						}
 				}
 			}
 
 		}
-	}
-
-	public void Dijkstra() {
-		HashMap<String, Vertex> graph = this.g.graph;
-		String[] stringArray = this.perm.keySet().toArray(new String[this.perm.keySet().size()]);
-		while (!((stringArray[stringArray.length - 1] == this.destination))) {
-			Edge candidate = null;
-			String v = "";
-			String parent = "";
-			int min = -1;
-			for (int i = (this.perm.size() - 1); i >= 0; i--) {
-
-				v = stringArray[i];
-				System.out.println("Perm: " + v);
-				/* SET TEMPDIST TO NEIGHBOURS */
-				for (Edge e : graph.get(v)) {
-					if (!(this.perm.containsKey(e.getDest())) && (this.parent.get(v) != e.getDest())) {
-						int tempNodeDist = this.perm.get(v) + e.getWeigth();
-						// System.out.println(this.dist);
-						if (this.dist.get(e.getDest()) > tempNodeDist || this.dist.get(e.getDest()) == -1) {
-							this.dist.put(e.getDest(), tempNodeDist);
-						}
-						// tempNodeDist = this.dist.get(e.getDest());
-						// System.out.println("Checking Edge: " + e.getDest() +
-						// " - " + tempNodeDist);
-						if (candidate != null) {
-							// System.out.println("In if: " + min + " =? " +
-							// tempNodeDist + " = " + this.perm.get(v)+ " + " +
-							// e.getWeigth());
-						}
-
-						if (candidate == null || tempNodeDist < min || min == -1) {
-							// System.out.println("cand: " + e.getDest() + "
-							// parent: " + v);
-							candidate = e;
-							min = tempNodeDist;
-							// candidate.setWeight(tempNodeDist);
-							// candidate.setWeight(tempNodeDist);
-							// System.out.println("Cand: " + tempNodeDist);
-							parent = v;
-						}
-
-					}
-				}
-
-			}
-			this.parent.put(candidate.getDest(), parent);
-			this.perm.put(candidate.getDest(), this.dist.get(candidate.getDest())); // CHANGE
-			// TO
-			// DARYHEAP
-			// STORAGE
-			// System.out.println(this.parent + "\n " + this.perm);
-			// System.out.println(this.dist);
-			if (!graph.get(v).isEmpty()) {
-				graph.get(v).remove(candidate);
-			} else
-				graph.remove(v);
-			// System.out.println("Node: " + v + " Edges: " +
-			// graph.get(v).size());
-			System.out.println("Added: " + candidate.getDest() + "\n");
-			stringArray = this.perm.keySet().toArray(new String[this.perm.keySet().size()]);
-		}
-		String chain = "";
-		String stop = stringArray[stringArray.length - 1];
-		while (this.parent.get(stop) != null) {
-			chain += stop + " <- ";
-			stop = this.parent.get(stop);
-		}
-		chain += stop;
-		System.out.println(chain);
+		return S;
 	}
 
 }
