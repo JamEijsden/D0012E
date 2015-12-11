@@ -15,7 +15,7 @@ public class Test {
 		g = g.initGraph(g);
 		Djikstra d = new Djikstra(g, "C", "E");
 		DAryHeap h = new DAryHeap(g.graph.size(), 3);
-		for (String vertex : g.Vertices()) {
+		/*for (String vertex : g.Vertices()) {
 			if (vertex != "C") {
 				Node n = h.new Node(vertex);
 				h.insert(n);
@@ -31,14 +31,16 @@ public class Test {
 		System.out.println();
 		Node s = h.new Node("C");
 		s.dist = 7;
-		s.position = (2);
+		s.position = (4);
 		h.decreaseKey(s, -4);
 		for(Node n : h.data){
 			System.out.println(n.id + " - " + n.dist);
-		}
-		//for(DAryHeap.Node n : d.DijkstraHeap()){
-		//	System.out.println(n.id + " - " + n.dist);
-		/*}
+		}*/
+		for(DAryHeap.Node n : d.DijkstraHeap()){
+			System.out.print(n.id + " -- " + n.dist + " -- ");
+			if(n.parent != null) System.out.print(n.parent.id);
+			System.out.println();
+		}/*
 		try {
 			FileInputStream fstream = new FileInputStream("C:/Users/moxxan/Desktop/test.txt");
 			DataInputStream in = new DataInputStream(fstream);
