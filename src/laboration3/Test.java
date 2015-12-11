@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Test {
-	public char charAt(int index, int index2, int index3) {
-
-	}
-
 	public static void main(String[] args) {
-		// TODO code application logic here
+		Graph g = new Graph();
+		g = g.initGraph(g);
+		Djikstra d = new Djikstra(g, "C", "E");
+		d.update();
+
 		try {
 			FileInputStream fstream = new FileInputStream("C:/Users/moxxan/Desktop/test.txt");
 			DataInputStream in = new DataInputStream(fstream);
@@ -26,6 +26,8 @@ public class Test {
 				String list1 = str;
 				List<String> indexList = Arrays.asList(list1.split("\\s*,\\s*"));
 				System.out.print(indexList.get(0));
+				g.addEdge(indexList.get(0), indexList.get(1), Integer.parseInt(indexList.get(2)));
+				System.out.print(indexList.get(0));
 				System.out.print(" to ");
 				System.out.print(indexList.get(1));
 				System.out.print(" distance: ");
@@ -37,8 +39,4 @@ public class Test {
 		}
 	}
 
-	/*
-	 * Graph g = new Graph(); g = g.initGraph(g); Djikstra d = new Djikstra(g,
-	 * "C", "E"); d.update(); }
-	 */
 }
