@@ -7,13 +7,38 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+import laboration3.DAryHeap.Node;
+
 public class Test {
 	public static void main(String[] args) {
 		Graph g = new Graph();
 		g = g.initGraph(g);
 		Djikstra d = new Djikstra(g, "C", "E");
-		d.update();
-
+		DAryHeap h = new DAryHeap(g.graph.size(), 3);
+		for (String vertex : g.Vertices()) {
+			if (vertex != "C") {
+				Node n = h.new Node(vertex);
+				h.insert(n);
+			} else {
+				Node s = h.new Node("C");
+				s.dist=7;
+				h.insert(s);
+			}
+		}
+		for(Node n : h.data){
+			System.out.println(n.id + " - " + n.dist);
+		}
+		System.out.println();
+		Node s = h.new Node("C");
+		s.dist = 7;
+		s.position = (2);
+		h.decreaseKey(s, -4);
+		for(Node n : h.data){
+			System.out.println(n.id + " - " + n.dist);
+		}
+		//for(DAryHeap.Node n : d.DijkstraHeap()){
+		//	System.out.println(n.id + " - " + n.dist);
+		/*}
 		try {
 			FileInputStream fstream = new FileInputStream("C:/Users/moxxan/Desktop/test.txt");
 			DataInputStream in = new DataInputStream(fstream);
@@ -36,7 +61,7 @@ public class Test {
 			in.close();
 		} catch (Exception e) {
 			System.err.println(e);
-		}
+		}*/
 	}
 
 }
