@@ -16,8 +16,10 @@ class DAryHeap {
 	}
 
 	public class Node {
-		int dist;
+		int dist = -1;
 		String id;
+		Node parent = null;
+		Boolean unvisited = true;
 
 		public Node(String id, int dist) {
 			this.dist = dist;
