@@ -5,7 +5,7 @@ package laboration3;
 
 /** Class D-ary Heap **/
 class DAryHeap {
-	private Node[] data;
+	public Node[] data;
 	private int heapSize;
 	private int d;
 
@@ -16,7 +16,7 @@ class DAryHeap {
 	}
 
 	public class Node {
-		Integer dist = -1;
+		Integer dist = 10000;
 		String id;
 		Node parent = null;
 		Boolean unvisited = true;
@@ -29,7 +29,7 @@ class DAryHeap {
 	}
 
 	public void decreaseKey(Node n, int value) {
-		if (value < n.dist) {
+		if (value < n.dist && n.id == data[n.position].id) {
 			int index = n.position;
 			data[index].dist = value;
 			heapifyUp(index);
@@ -58,11 +58,7 @@ class DAryHeap {
 
 	/** Function to get index of k th child of i **/
 	public int kthChild(int i, int k) {
-		if (data[d * i + k] == null) {
-			throw new HeapException("Parent doesn't have a child on this spot yet.");
-		} else {
-			return d * i + k;
-		}
+		return d * i + k;
 	}
 
 	@SuppressWarnings("serial")
@@ -79,7 +75,7 @@ class DAryHeap {
 		} else {
 			n.position = heapSize;
 			data[heapSize++] = n;
-			System.out.println(n);
+			//System.out.println(n);
 
 			heapifyUp(heapSize - 1);
 		}
@@ -117,11 +113,11 @@ class DAryHeap {
 		int bestChild = kthChild(ind, 1);
 		int k = 2;
 		int pos = kthChild(ind, k);
-		while ((k <= d) && (pos < heapSize)) {
+		while ((k < d) && (pos < heapSize)) {
 			if (data[pos].dist < data[bestChild].dist)
 				bestChild = pos;
 			pos = kthChild(ind, k++);
-		}
+			}
 		return bestChild;
 	}
 
