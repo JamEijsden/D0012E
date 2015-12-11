@@ -8,7 +8,6 @@ public class Test {
 
 		Djikstra d = new Djikstra(g, "C", "E");
 		//d.update();
-
 	}
 
 }

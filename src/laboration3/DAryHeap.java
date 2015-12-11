@@ -27,8 +27,11 @@ class DAryHeap {
 		}
 	}
 
-	public void updateKey() {
-
+	public void decreaseKey(Node n) {
+		
+		{
+			
+		}
 	}
 
 	public Node extractMin() {
@@ -72,7 +75,10 @@ class DAryHeap {
 		if (heapSize == data.length) {
 			throw new HeapException("Heap is full");
 		} else {
+			n.position = heapSize;
 			data[heapSize++] = n;
+			System.out.println(n);
+			
 			heapifyUp(heapSize - 1);
 		}
 	}
