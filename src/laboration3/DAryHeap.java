@@ -1,15 +1,7 @@
 package laboration3;
 
 /*public class DAryHeap {
-
-}*/
-/**
- *   Java Program to Implement D-ary-Heap
  */
-
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 /** Class D-ary Heap **/
 class DAryHeap {
@@ -53,21 +45,63 @@ class DAryHeap {
 		}
 
 		/** Function to get index of k th child of i **/
-		private int kthChild(int i, int k) {
-			return d * i + k;
+		public int kthChild(int i, int k) {
+			if (data[d * i + k] == null) {
+				throw new HeapException("Parent doesn't have a child on this spot yet.");
+			} else {
+				return d * i + k;
+			}
 		}
 
+		@SuppressWarnings("serial")
 		public class HeapException extends RuntimeException {
 			public HeapException(String message) {
 				super(message);
 			}
 		}
 
-		public void insert(int i) {
+		public void insert(Node n) {
 			if (heapSize == data.length) {
-				// increase Size of heap
+				throw new HeapException("Heap is full");
+			} else {
+				data[heapSize++] = n;
+				heapifyUp(heapSize - 1);
 			}
-
 		}
+
+		public void heapifyUp(int childInd) {
+			Node tmp = data[childInd];
+			while (childInd > 0 && tmp.dist < data[getParentIndex(childInd)].dist) {
+				data[childInd] = data[getParentIndex(childInd)];
+				childInd = getParentIndex(childInd);
+			}
+			data[childInd] = tmp;
+		}
+
+		public void heapifyDown(int ind) {
+			int child;
+			Node tmp = data[ind];
+			while (kthChild(ind, 1) < heapSize) {
+				child = minChild(ind);
+				if (data[child].dist < tmp.dist)
+					data[ind] = data[child];
+				else
+					break;
+				ind = child;
+			}
+			data[ind] = tmp;
+		}
+	    public int minChild(int ind) {
+	        int bestChild = kthChild(ind, 1);
+	        int k = 2;
+	        int pos = kthChild(ind, k);
+	        while ((k <= d) && (pos < heapSize)) 
+	        {
+	            if (data[pos].dist < data[bestChild].dist) 
+	                bestChild = pos;
+	            pos = kthChild(ind, k++);
+	        }    
+	        return bestChild;
+	    }
 	}
 }
