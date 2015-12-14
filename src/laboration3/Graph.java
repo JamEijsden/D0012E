@@ -98,12 +98,12 @@ public class Graph {
 		 * 7); G.addEdge("D", "E", 8); G.addEdge("B", "E", 3); G.addEdge("C",
 		 * "B", 12); G.addEdge("D", "G", 1); G.addEdge("E", "G", 5);
 		 */// G.addVertex("H");
-		// G.generateGraph(5000, 8000);
+		 G.generateGraph(10, 30);
 		// G.createCVSfile();
 		// print out graph
-		G.readCSV();
+		//G.readCSV();
 		G.printGraph();
-		System.out.println("Graph");
+		//System.out.println("Graph");
 
 		// print out graph again by iterating over vertices and edges
 
@@ -142,6 +142,7 @@ public class Graph {
 	}
 
 	public void generateGraph(int vertices, int edges) {
+		vertices = vertices -1;
 		if (vertices > edges)
 			throw new GraphException("Less Edges than Vertices");
 		if (!(edges < vertices * vertices))

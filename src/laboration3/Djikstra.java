@@ -83,7 +83,9 @@ public class Djikstra {
 					} else {
 						for (int j = 0; j < visited.size(); j++){							
 							if (visited.get(j).id == tmp.id && visited.get(j).dist > new_node.dist) {
-								Q.decreaseKey(visited.get(j), new_node.dist);
+								new_node.position = visited.get(j).position;
+								Q.decreaseKey(new_node, new_node.dist);
+						
 								visited.set(j, new_node);
 							}
 						}
