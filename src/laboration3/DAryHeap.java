@@ -79,7 +79,7 @@ class DAryHeap {
 			throw new HeapException("Heap is full");
 		} else {*/
 			n.position = heapSize;
-			System.out.println(heapSize);
+			printHeap();
 			data[heapSize] = n;
 			heapSize++;
 			//System.out.println(n);

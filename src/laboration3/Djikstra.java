@@ -51,9 +51,12 @@ public class Djikstra {
 	public boolean contains(Node n, ArrayList<Node> array) {
 		if (array.isEmpty())
 			return false;
-		for (Node m : array)
-			if (m.id == n.id)
+		for (Node m : array) {
+			if (m.id.equals(n.id)) {
 				return true;
+			}
+			
+		}
 		return false;
 	}
 
@@ -70,9 +73,9 @@ public class Djikstra {
 
 				Node tmp = Q.new Node(x.getDest());
 				tmp.dist = x.getWeigth();
-				//System.out.println("tmp distance: " + tmp.dist);
+				// System.out.println("tmp distance: " + tmp.dist);
 				if (!contains(tmp, S)) {
-				
+
 					Node new_node = Q.new Node(tmp.id);
 					int new_dist = tmp.dist + u.dist;
 					new_node.dist = new_dist;
@@ -81,11 +84,10 @@ public class Djikstra {
 						Q.insert(new_node);
 						visited.add(new_node);
 					} else {
-						for (int j = 0; j < visited.size(); j++){							
+						for (int j = 0; j < visited.size(); j++) {
 							if (visited.get(j).id == tmp.id && visited.get(j).dist > new_node.dist) {
 								new_node.position = visited.get(j).position;
 								Q.decreaseKey(visited.get(j), new_node.dist);
-						
 								visited.set(j, new_node);
 							}
 						}

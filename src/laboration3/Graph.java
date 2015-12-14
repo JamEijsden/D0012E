@@ -92,18 +92,22 @@ public class Graph {
 	}
 
 	public Graph initGraph(Graph G) {
-
-		/*
-		 * G.addEdge("A", "B", 38); G.addEdge("A", "C", 2); G.addEdge("C", "D",
-		 * 7); G.addEdge("D", "E", 8); G.addEdge("B", "E", 3); G.addEdge("C",
-		 * "B", 12); G.addEdge("D", "G", 1); G.addEdge("E", "G", 5);
-		 */// G.addVertex("H");
-		 G.generateGraph(10, 30);
+/*
+		G.addEdge("A", "B", 38);
+		G.addEdge("A", "C", 2);
+		G.addEdge("C", "D", 7);
+		G.addEdge("D", "E", 8);
+		G.addEdge("B", "E", 3);
+		G.addEdge("C", "B", 12);
+		G.addEdge("D", "G", 1);
+		G.addEdge("E", "G", 5);
+	*/	// G.addVertex("H");
+		 //G.generateGraph(10, 30);
 		// G.createCVSfile();
 		// print out graph
-		//G.readCSV();
+		G.readCSV();
+		System.out.println("Graph");
 		G.printGraph();
-		//System.out.println("Graph");
 
 		// print out graph again by iterating over vertices and edges
 
@@ -142,7 +146,7 @@ public class Graph {
 	}
 
 	public void generateGraph(int vertices, int edges) {
-		vertices = vertices -1;
+		vertices = vertices - 1;
 		if (vertices > edges)
 			throw new GraphException("Less Edges than Vertices");
 		if (!(edges < vertices * vertices))
