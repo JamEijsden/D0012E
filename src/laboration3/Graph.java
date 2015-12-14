@@ -99,7 +99,7 @@ public class Graph {
         G.addEdge("D", "G", 1);
         G.addEdge("E", "G", 5);
         *///G.addVertex("H");
-		G.generateGraph(7, 16);
+		G.generateGraph(5000, 8000);
 		G.createCVSfile();
         // print out graph
         System.out.println("Graph");
