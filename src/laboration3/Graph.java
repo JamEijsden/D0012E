@@ -5,10 +5,15 @@
 
 package laboration3;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
+
+import laboration3.DAryHeap.HeapException;
 
 public class Graph {
 	//int size;
@@ -85,7 +90,7 @@ public class Graph {
 	
 	public Graph initGraph(Graph G) {
 		
-        G.addEdge("A", "B", 38);
+        /*G.addEdge("A", "B", 38);
         G.addEdge("A", "C", 2);
         G.addEdge("C", "D", 7);
         G.addEdge("D", "E", 8);
@@ -93,8 +98,9 @@ public class Graph {
         G.addEdge("C", "B", 12);
         G.addEdge("D", "G", 1);
         G.addEdge("E", "G", 5);
-        //G.addVertex("H");
-
+        *///G.addVertex("H");
+		G.generateGraph(7, 16);
+		G.createCVSfile();
         // print out graph
         System.out.println("Graph");
 
@@ -108,4 +114,69 @@ public class Graph {
         }
         return G;
     }
+	
+	@SuppressWarnings("resource")
+	public void createCVSfile(){
+		String line = "";
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("generatedGraph.txt", "UTF-8");
+			for(int i = 0; i < graph.size()-1; i++){
+				for(Edge e : graph.get(""+i).adjecent){
+					line += i+","+e.getDest()+","+e.getWeigth();
+					writer.println(line);
+					line="";
+				}
+			}
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	public void generateGraph(int vertices, int edges){
+		if(vertices > edges)
+			throw new GraphException("Less Edges than Vertices");
+		if(!(edges < vertices*vertices))
+			throw new GraphException("Too many edges, supposed to be < Vertices^2");
+			
+		for(int i = 0; i < vertices; i++){
+			int dist = (int) ((Math.random() * 30)+1);
+			this.addEdge(""+i, (""+(i+1)), dist);
+			
+		}
+		int dist = (int) ((Math.random() * 30)+1);
+		this.addEdge("0", ""+(graph.size()-1), dist);
+		
+		int dest, start, cost;
+		for(int j = edges-(vertices+1); j > 0;j--){
+			dest = (int) (Math.random() * vertices+1);
+			start = (int) (Math.random() * vertices+1);
+			while(hasEdge(""+start, ""+dest) || start == dest){
+				dest = (int) (Math.random() * vertices+1);
+				start = (int) (Math.random() * vertices+1);
+			}
+			cost = (int) ((Math.random() * 30)+1);
+			this.addEdge(""+start, ""+dest, cost);
+		}
+	}
+	
+	private boolean hasEdge(String start, String dest){
+		for(Edge e : graph.get(start).adjecent){
+			if(e.getDest().equals(dest)){
+			//	System.out.println(start + " has edge to " + e.getDest() + "("+dest+")");
+				return true;}
+		}
+		return false;
+		
+	}
+	
+	@SuppressWarnings("serial")
+	public class GraphException extends RuntimeException {
+		public GraphException(String message) {
+			super(message);
+		}
+	}
 }
