@@ -17,7 +17,7 @@ public class Djikstra {
 	HashMap<String, String> parent;
 	// HEAP IMPL
 	ArrayList<Node> visited = new ArrayList<Node>();
-	Node[] S = {};
+	ArrayList<Node> S = new ArrayList<Node>();
 	DAryHeap Q;
 	Graph g;
 	String destination;
@@ -37,7 +37,7 @@ public class Djikstra {
 	public void initialize(String source) {
 		for (String vertex : this.g.Vertices()) {
 
-			this.dist.put(vertex, -1);
+			this.dist.put(vertex, 10000);
 		}
 		this.dist.put(source, 0); // Distance from source to source
 		this.perm.put(source, 0);
@@ -45,49 +45,64 @@ public class Djikstra {
 	}
 
 	public void initHeap(String source) {
-		for (String vertex : this.g.Vertices()) {
-			if (vertex != source) {
-				Node n = Q.new Node(vertex);
-				Q.insert(n);
-			}
-		}
+		/*
+		 * for (String vertex : this.g.Vertices()) { if (vertex != source) {
+		 * Node n = Q.new Node(vertex); Q.insert(n); } }
+		 */
 		Node s = Q.new Node(source);
 		s.dist = 0;
 		Q.insert(s);
 		visited.add(s);
 	}
 
-	public Node[] DijkstraHeap() {
+	public boolean contains(Node n, ArrayList<Node> array) {
+		if (array.isEmpty())
+			return false;
+		for (Node m : array)
+			if (m.id == n.id)
+				return true;
+		return false;
+	}
+
+	public ArrayList<Node> DijkstraHeap() {
 		Node u;
-		while (!Q.isEmpty()) {
+		while (!visited.isEmpty()) {
+			System.out.println();
 			u = Q.extractMin();
-			S[S.length] = u;
+			S.add(u);
 			if (visited.contains(u))
 				visited.remove(u);
 			visited.trimToSize();
-
 			for (Edge x : g.graph.get(u.id).adjecent) {
-				Node new_node = Q.new Node(x.getDest());
-				new_node.dist = x.getWeigth();
-				for (Node n : S)
-					if (new_node.id == n.id)
-						continue;
-				int new_dist = new_node.dist + u.dist;
-				new_node.dist = new_dist;
-				if(!visited.contains(new_node.id)){
-					Q.decreaseKey(new_node, new_node.dist);
-					visited.add(new_node);
-				} else {
-					for(int j = 0; j < visited.size(); j++)
-						if(visited.get(j).id == new_node.id && visited.get(j).dist > new_node.dist){
-							Q.decreaseKey(new_node, new_node.dist);
-							visited.add(j, new_node);
+
+				Node tmp = Q.new Node(x.getDest());
+				tmp.dist = x.getWeigth();
+				
+				System.out.println(tmp.dist);
+				if (!contains(tmp, S)) {
+				
+					Node new_node = Q.new Node(tmp.id);
+					int new_dist = tmp.dist + u.dist;
+					new_node.dist = new_dist;
+					new_node.parent = u;
+					if (!contains(new_node, visited)) {
+						Q.insert(new_node);
+						visited.add(new_node);
+					} else {
+						for (int j = 0; j < visited.size(); j++){
+							System.out.println(visited.get(j).id +" =="+ tmp.id);
+							System.out.println(visited.get(j).dist +">"+ new_node.dist);
+							if (visited.get(j).id == tmp.id && tmp.dist > new_node.dist) {
+								Q.decreaseKey(new_node, new_node.dist);
+								System.out.println("HEJHEJ");
+								visited.add(j, new_node);
+							}
 						}
+					}
 				}
 			}
 
 		}
 		return S;
 	}
-
 }

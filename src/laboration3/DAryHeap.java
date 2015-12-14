@@ -42,8 +42,9 @@ class DAryHeap {
 		} else {
 			Node min = data[0];
 			data[0] = data[heapSize - 1];
-			this.heapifyDown(0);
+			data[heapSize - 1] = null;
 			heapSize--;
+			this.heapifyDown(0);
 			return min;
 		}
 	}
@@ -74,11 +75,16 @@ class DAryHeap {
 			throw new HeapException("Heap is full");
 		} else {
 			n.position = heapSize;
-			data[heapSize++] = n;
+			data[heapSize] = n;
+			heapSize++;
 			//System.out.println(n);
 
 			heapifyUp(heapSize - 1);
 		}
+	}
+	
+	public int size(){
+		return heapSize;
 	}
 
 	public void heapifyUp(int childInd) {
