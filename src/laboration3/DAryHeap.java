@@ -16,7 +16,7 @@ class DAryHeap {
 	}
 
 	public class Node {
-		Integer dist = 10000;
+		Integer dist = -1;
 		String id;
 		Node parent = null;
 		Boolean unvisited = true;
@@ -42,6 +42,7 @@ class DAryHeap {
 		} else {
 			Node min = data[0];
 			data[0] = data[heapSize - 1];
+			data[0].position = 0;
 			data[heapSize - 1] = null;
 			heapSize--;
 			this.heapifyDown(0);
@@ -54,6 +55,9 @@ class DAryHeap {
 	}
 
 	private int getParentIndex(int i) {
+		if (i == 0) {
+			return i;
+		}
 		return (i - 1) / d;
 	}
 
@@ -71,9 +75,9 @@ class DAryHeap {
 
 	public void insert(Node n) {
 
-		if (heapSize == data.length) {
+/*		if (heapSize == data.length) {
 			throw new HeapException("Heap is full");
-		} else {
+		} else {*/
 			n.position = heapSize;
 			data[heapSize] = n;
 			heapSize++;
@@ -81,7 +85,6 @@ class DAryHeap {
 
 			heapifyUp(heapSize - 1);
 		}
-	}
 	
 	public int size(){
 		return heapSize;
@@ -92,9 +95,10 @@ class DAryHeap {
 		while (childInd > 0 && tmp.dist < data[getParentIndex(childInd)].dist) {
 			data[childInd] = data[getParentIndex(childInd)];
 			data[childInd].position = tmp.position;
-			tmp.position = childInd;
 			childInd = getParentIndex(childInd);
+			tmp.position = childInd;
 		}
+		
 		data[childInd] = tmp;
 	}
 
@@ -104,13 +108,14 @@ class DAryHeap {
 		while (kthChild(ind, 1) < heapSize) {
 			child = minChild(ind);
 			if (data[child].dist < tmp.dist) {
-				data[ind].position = data[child].position;
 				data[child].position = ind;
 				data[ind] = data[child];
 
 			} else
 				break;
 			ind = child;
+			tmp.position = ind;
+			
 		}
 		data[ind] = tmp;
 	}
