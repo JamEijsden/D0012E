@@ -63,7 +63,6 @@ public class Djikstra {
 	public ArrayList<Node> DijkstraHeap() {
 		Node u;
 		while (!Q.isEmpty()) {
-			System.out.println();
 			u = Q.extractMin();
 			S.add(u);
 			if (visited.contains(u))

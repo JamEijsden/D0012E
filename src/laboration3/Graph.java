@@ -97,13 +97,13 @@ public class Graph {
 		 * 7); G.addEdge("D", "E", 8); G.addEdge("B", "E", 3); G.addEdge("C",
 		 * "B", 12); G.addEdge("D", "G", 1); G.addEdge("E", "G", 5);
 		 */ // G.addVertex("H");
-		// G.generateGraph(10, 15);
+		 G.generateGraph(5000, 7500);
 		// G.createCVSfile();
-		G.readCSV();
+		//G.readCSV();
 		// print out graph
 		// G.readCSV();
-		System.out.println("Graph");
-		G.printGraph();
+		//System.out.println("Graph");
+		//G.printGraph();
 
 		// print out graph again by iterating over vertices and edges
 
@@ -170,11 +170,11 @@ public class Graph {
 	}
 
 	private boolean hasEdge(String start, String dest) {
-		System.out.println(start + ", " + dest);
+		//System.out.println(start + ", " + dest);
 		if (graph.containsKey(start) && start != dest) {
 			for (Edge e : graph.get(start).adjecent) {
 				if (e.getDest().equals(dest)) {
-					System.out.println(start + " has edge to " + e.getDest() + "(" + dest + ")");
+					//System.out.println(start + " has edge to " + e.getDest() + "(" + dest + ")");
 					return true;
 				}
 			}
