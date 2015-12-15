@@ -15,11 +15,12 @@ import java.util.List;
 import java.util.Set;
 
 public class Graph {
-	// int size;
+	int v, e;
 	HashMap<String, Vertex> graph;
 
-	public Graph() {
-		// this.size = size;
+	public Graph(int v, int e) {
+		this.v = v;
+		this.e = e;
 		this.graph = new HashMap<String, Vertex>();
 	}
 
@@ -91,23 +92,23 @@ public class Graph {
 		return neighbours;
 	}
 
-	public Graph initGraph(Graph G) {
+	public Graph initGraph() {
 		/*
 		 * G.addEdge("A", "B", 38); G.addEdge("A", "C", 2); G.addEdge("C", "D",
 		 * 7); G.addEdge("D", "E", 8); G.addEdge("B", "E", 3); G.addEdge("C",
 		 * "B", 12); G.addEdge("D", "G", 1); G.addEdge("E", "G", 5);
 		 */ // G.addVertex("H");
-		 G.generateGraph(5000, 7500);
+		this.generateGraph(this.v, this.e);
 		// G.createCVSfile();
-		//G.readCSV();
+		// G.readCSV();
 		// print out graph
 		// G.readCSV();
-		//System.out.println("Graph");
-		//G.printGraph();
+		// System.out.println("Graph");
+		// G.printGraph();
 
 		// print out graph again by iterating over vertices and edges
 
-		return G;
+		return this;
 	}
 
 	public void printGraph() {
@@ -145,7 +146,7 @@ public class Graph {
 		vertices = vertices - 1;
 		if (vertices > edges)
 			throw new GraphException("Less Edges than Vertices");
-		if (!(edges < vertices * vertices))
+		if (!(edges < (vertices * vertices)))
 			throw new GraphException("Too many edges, supposed to be < Vertices^2");
 
 		for (int i = 0; i < vertices; i++) {
@@ -170,11 +171,12 @@ public class Graph {
 	}
 
 	private boolean hasEdge(String start, String dest) {
-		//System.out.println(start + ", " + dest);
+		// System.out.println(start + ", " + dest);
 		if (graph.containsKey(start) && start != dest) {
 			for (Edge e : graph.get(start).adjecent) {
 				if (e.getDest().equals(dest)) {
-					//System.out.println(start + " has edge to " + e.getDest() + "(" + dest + ")");
+					// System.out.println(start + " has edge to " + e.getDest()
+					// + "(" + dest + ")");
 					return true;
 				}
 			}

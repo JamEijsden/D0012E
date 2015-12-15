@@ -17,15 +17,13 @@ public class Djikstra {
 	ArrayList<Node> S = new ArrayList<Node>();
 	DAryHeap Q;
 	Graph g;
-	String destination;
 
-	public Djikstra(Graph g, String source, String dest) {
+	public Djikstra(Graph g, String source, int d) {
 		this.g = g;
-		destination = dest;
 		dist = new HashMap<String, Integer>();
 		perm = new LinkedHashMap<String, Integer>();
 		parent = new HashMap<String, String>();
-		Q = new DAryHeap(g.graph.size(), 3);
+		Q = new DAryHeap(g.graph.size(), d);
 		// initialize(source);
 		initHeap(source);
 	}

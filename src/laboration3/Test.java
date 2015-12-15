@@ -11,10 +11,11 @@ import laboration3.DAryHeap.Node;
 
 public class Test {
 	public static void main(String[] args) {
-		Graph g = new Graph();
-		g = g.initGraph(g);
-		Djikstra d = new Djikstra(g, "0", "E");
-		DAryHeap h = new DAryHeap(g.graph.size(), 3);
+		//arg0 = vertices, arg1 = edges
+		Graph g = new Graph(30000, 50000);
+		g = g.initGraph();
+		//arg0 = graph, arg1 = source, arg2 = d in d-heap
+		Djikstra d = new Djikstra(g, "0", 3);
 		/*
 		 * for (String vertex : g.Vertices()) { if (vertex != "C") { Node n =
 		 * h.new Node(vertex); h.insert(n); } else { Node s = h.new Node("C");
