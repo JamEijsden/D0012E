@@ -92,20 +92,16 @@ public class Graph {
 	}
 
 	public Graph initGraph(Graph G) {
-/*
-		G.addEdge("A", "B", 38);
-		G.addEdge("A", "C", 2);
-		G.addEdge("C", "D", 7);
-		G.addEdge("D", "E", 8);
-		G.addEdge("B", "E", 3);
-		G.addEdge("C", "B", 12);
-		G.addEdge("D", "G", 1);
-		G.addEdge("E", "G", 5);
-	*/	// G.addVertex("H");
-		 //G.generateGraph(10, 30);
+		/*
+		 * G.addEdge("A", "B", 38); G.addEdge("A", "C", 2); G.addEdge("C", "D",
+		 * 7); G.addEdge("D", "E", 8); G.addEdge("B", "E", 3); G.addEdge("C",
+		 * "B", 12); G.addEdge("D", "G", 1); G.addEdge("E", "G", 5);
+		 */ // G.addVertex("H");
+		// G.generateGraph(10, 15);
 		// G.createCVSfile();
-		// print out graph
 		G.readCSV();
+		// print out graph
+		// G.readCSV();
 		System.out.println("Graph");
 		G.printGraph();
 
@@ -174,11 +170,13 @@ public class Graph {
 	}
 
 	private boolean hasEdge(String start, String dest) {
-		for (Edge e : graph.get(start).adjecent) {
-			if (e.getDest().equals(dest)) {
-				// System.out.println(start + " has edge to " + e.getDest() +
-				// "("+dest+")");
-				return true;
+		System.out.println(start + ", " + dest);
+		if (graph.containsKey(start) && start != dest) {
+			for (Edge e : graph.get(start).adjecent) {
+				if (e.getDest().equals(dest)) {
+					System.out.println(start + " has edge to " + e.getDest() + "(" + dest + ")");
+					return true;
+				}
 			}
 		}
 		return false;
@@ -203,9 +201,12 @@ public class Graph {
 				// char character = list.charAt();
 
 				String list1 = str;
+
 				List<String> indexList = Arrays.asList(list1.split("\\s*,\\s*"));
-				System.out.print(indexList.get(0));
-				this.addEdge(indexList.get(0), indexList.get(1), Integer.parseInt(indexList.get(2)));
+				if (!hasEdge(indexList.get(0), indexList.get(1))) {
+					// System.out.print(indexList.get(0));
+					this.addEdge(indexList.get(0), indexList.get(1), Integer.parseInt(indexList.get(2)));
+				}
 			}
 			in.close();
 		} catch (
